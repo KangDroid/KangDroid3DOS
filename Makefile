@@ -1,16 +1,14 @@
 CXX=g++
-CFLAGS=-g -Wall -O3 -lwiringPi
+CFLAGS=-g -Wall -O3 -lwiringPi -Iinclude
 TARGET=app.out
-OBJS=EndstopClass.o \
-	InnerFunction.o \
-	GCodeWrapper.o \
-	main.o
 
-%.o: %.c
-	$(CXX) $(CFLAGS) -c $< -o $@
+SRC=src/EndstopClass.cpp\
+	src/InnerFunction.cpp\
+	src/GCodeWrapper.cpp\
+	src/main.cpp
 
 all: $(OBJS)
-	$(CXX) $(CFLAGS) -o $(TARGET) $(OBJS)
+	$(CXX) $(CFLAGS) $(SRC) -o $(TARGET)
 
 clean:
 	rm -rf ./*.out ./*.o ./*.dSYM
