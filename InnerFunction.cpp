@@ -1,20 +1,45 @@
 #include "main.h"
 
 void InnerFunction::autoHomeSimulation() {
+    int start_time;
+    int end_time;
+
     // Home X
+    start_time = time(NULL);
     while (!(digitalRead(pin_array[0]) == false)) {
-        clearScreen();
-        cout << "Moving X..." << endl;
+        end_time = time(NULL);
+        if ((end_time - start_time) == 5) {
+            // Failed
+            sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
+        } else {
+            clearScreen();
+            cout << "Moving X..." << endl;
+        }
     }
+
     // Home Y
+    start_time = time(NULL);
     while (!(digitalRead(pin_array[1]) == false)) {
-        clearScreen();
-        cout << "Moving Y..." << endl;
+        end_time = time(NULL);
+        if ((end_time - start_time) == 5) {
+            // Failed
+        } else {
+            clearScreen();
+            cout << "Moving Y..." << endl;
+        }
     }
+
     // Home Z
+    start_time = time(NULL);
     while (!(digitalRead(pin_array[2]) == false)) {
-        clearScreen();
-        cout << "Moving Z..." << endl;
+        end_time = time(NULL);
+        
+        if ((end_time - start_time) == 5) {
+            // Failed
+        } else {
+            clearScreen();
+            cout << "Moving Z..." << endl;
+        }
     }
 }
 

@@ -45,3 +45,12 @@ void initPinsGPIO() {
     EndstopClass es(pin_array, INPUT, PUD_UP);
     es.initPin(); // Destroies when pin initiated
 }
+
+void sendSignal(int cause) {
+    switch (cause) {
+        case INTERRUPT_CODE::AUTO_HOME_FAILED:
+            cout << "Homing Failed!!" << endl << "Exiting Program!" << endl;
+            exit(1); 
+        break;
+    }
+}
