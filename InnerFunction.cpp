@@ -20,7 +20,7 @@ void InnerFunction::autoHomeSimulation() {
 
 void InnerFunction::testEndstopPin() {
     cout << "Current PIN Status:" << endl;
-    for (int i = 0; i < ENDSTOP_PIN_COUNT; i++) {
+    for (int i = 0; i < es_pin_count; i++) {
         cout << "PIN: " << pin_array[i] << ((digitalRead(pin_array[i]) == false) ? ": PROBED" : ": UNPROBED") << endl;
     }
     cout << endl << endl;

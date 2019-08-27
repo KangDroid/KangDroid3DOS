@@ -8,13 +8,13 @@
 
 using namespace std;
 
-#define ENDSTOP_PIN_COUNT 3
-
 static int pin_array[] = { /* Endstop Pinmap Array */
     7, /* X */
     0, /* Y */
     2, /* Z */
 };
+
+const static int es_pin_count = sizeof(pin_array)/sizeof(int);
 
 void initPinsGPIO();
 
