@@ -43,5 +43,5 @@ int showMenu() {
 void initPinsGPIO() {
     wiringPiSetup();
     EndstopClass es(pin_array, INPUT, PUD_UP);
-    es.initPin();
+    es.initPin(); // Destroies when pin initiated
 }
