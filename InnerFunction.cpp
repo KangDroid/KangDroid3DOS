@@ -41,3 +41,9 @@ void InnerFunction::getGCodeInput() {
     }
     cout << endl << endl;
 }
+
+void InnerFunction::moveAxis() {
+    // Rotate Axis
+    // if endstop switched -> Stop
+    // Feedrate(Speed required)
+}

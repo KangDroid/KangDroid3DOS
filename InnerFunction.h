@@ -3,4 +3,5 @@ class InnerFunction {
         static void testEndstopPin();
         static void autoHomeSimulation();
         static void getGCodeInput();
+        static void moveAxis();
 };
