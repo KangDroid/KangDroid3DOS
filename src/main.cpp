@@ -1,8 +1,5 @@
 #include "main.h"
 
-int showMenu();
-void getGCodeInput();
-
 int main(void) {
     int menu_val;
     // Implementation
@@ -54,3 +51,9 @@ void sendSignal(int cause) {
         break;
     }
 }
+
+#if defined(__APPLE__) || defined(__linux__) || defined(__unix__) || defined(__unix) || defined(unix)
+void clearScreen() {
+    system("clear && printf '\e[3J'");
+}
+#endif

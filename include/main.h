@@ -21,11 +21,7 @@ enum INTERRUPT_CODE {
 const static int es_pin_count = sizeof(pin_array)/sizeof(int);
 
 void initPinsGPIO();
-
+int showMenu();
+void getGCodeInput();
 void sendSignal(int cause);
-
-#if defined(__APPLE__) || defined(__linux__) || defined(__unix__) || defined(__unix) || defined(unix)
-static void clearScreen() {
-    system("clear && printf '\e[3J'");
-}
-#endif
+void clearScreen();
