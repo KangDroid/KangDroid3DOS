@@ -1,5 +1,7 @@
 sub:
 	$(MAKE) -C src
-
-all: sub
 	mv src/app.out ./
+
+clean:
+	rm -rf src/*.o
+	rm -rf src/*.out
