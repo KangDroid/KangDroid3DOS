@@ -4,7 +4,7 @@ int main(void) {
     int menu_val;
     // Implementation
     wiringPiSetup();
-    EndstopClass es(pin_array, INPUT, PUD_UP);
+    EndstopClass es(pin_es_array, INPUT, PUD_UP);
     es.initPin(); //Shouldn't be destroied
 
     do {

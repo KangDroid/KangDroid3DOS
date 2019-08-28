@@ -6,7 +6,7 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home X
     start_time = time(NULL);
-    while (!(digitalRead(pin_array[0]) == false)) {
+    while (!(digitalRead(pin_es_array[0]) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 5) {
             // Failed
@@ -19,7 +19,7 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home Y
     start_time = time(NULL);
-    while (!(digitalRead(pin_array[1]) == false)) {
+    while (!(digitalRead(pin_es_array[1]) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 5) {
             // Failed
@@ -31,7 +31,7 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home Z
     start_time = time(NULL);
-    while (!(digitalRead(pin_array[2]) == false)) {
+    while (!(digitalRead(pin_es_array[2]) == false)) {
         end_time = time(NULL);
         
         if ((end_time - start_time) == 5) {
@@ -46,7 +46,7 @@ void InnerFunction::autoHomeSimulation() {
 void InnerFunction::testEndstopPin() {
     cout << "Current PIN Status:" << endl;
     for (int i = 0; i < es_pin_count; i++) {
-        cout << "PIN: " << pin_array[i] << ((digitalRead(pin_array[i]) == false) ? ": PROBED" : ": UNPROBED") << endl;
+        cout << "PIN: " << pin_es_array[i] << ((digitalRead(pin_es_array[i]) == false) ? ": PROBED" : ": UNPROBED") << endl;
     }
     cout << endl << endl;
 }

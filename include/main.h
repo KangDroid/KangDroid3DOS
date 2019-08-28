@@ -8,7 +8,7 @@
 
 using namespace std;
 
-static int pin_array[] = { /* Endstop Pinmap Array */
+static int pin_es_array[] = { /* Endstop Pinmap Array */
     7, /* X */
     0, /* Y */
     2, /* Z */
@@ -18,7 +18,7 @@ enum INTERRUPT_CODE {
     AUTO_HOME_FAILED = 0
 };
 
-const static int es_pin_count = sizeof(pin_array)/sizeof(int);
+const static int es_pin_count = sizeof(pin_es_array)/sizeof(int);
 
 int showMenu();
 void getGCodeInput();
