@@ -3,7 +3,9 @@
 int main(void) {
     int menu_val;
     // Implementation
-    initPinsGPIO();
+    wiringPiSetup();
+    EndstopClass es(pin_array, INPUT, PUD_UP);
+    es.initPin(); //Shouldn't be destroied
 
     do {
         menu_val = showMenu();
@@ -35,12 +37,6 @@ int showMenu() {
     cin >> ret_val;
 
     return ret_val;
-}
-
-void initPinsGPIO() {
-    wiringPiSetup();
-    EndstopClass es(pin_array, INPUT, PUD_UP);
-    es.initPin(); // Destroies when pin initiated
 }
 
 void sendSignal(int cause) {

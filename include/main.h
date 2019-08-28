@@ -20,7 +20,6 @@ enum INTERRUPT_CODE {
 
 const static int es_pin_count = sizeof(pin_array)/sizeof(int);
 
-void initPinsGPIO();
 int showMenu();
 void getGCodeInput();
 void sendSignal(int cause);
