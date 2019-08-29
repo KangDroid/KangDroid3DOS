@@ -7,3 +7,7 @@ void GCodeWrapper::G28() {
 void GCodeWrapper::M119() {
     InnerFunction::testEndstopPin();
 }
+
+void GCodeWrapper::M18() {
+    mcc.disableStepper();
+}

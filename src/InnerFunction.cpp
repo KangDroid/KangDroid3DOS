@@ -6,19 +6,19 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home X
     start_time = time(NULL);
+    mcc.enableStepper();
     while (!(digitalRead(pin_es_array[0]) == false)) {
         end_time = time(NULL);
-        if ((end_time - start_time) == 5) {
+        if ((end_time - start_time) == 20) {
             // Failed
             sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            clearScreen();
-            cout << "Moving X..." << endl;
+            mcc.rotateMotorInfinite(64);
         }
     }
 
     // Home Y
-    start_time = time(NULL);
+    /*start_time = time(NULL);
     while (!(digitalRead(pin_es_array[1]) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 5) {
@@ -40,7 +40,7 @@ void InnerFunction::autoHomeSimulation() {
             clearScreen();
             cout << "Moving Z..." << endl;
         }
-    }
+    }*/
 }
 
 void InnerFunction::testEndstopPin() {
@@ -60,8 +60,14 @@ void InnerFunction::getGCodeInput() {
             GCodeWrapper::M119();
         } else if(!strcmp(test, "G28")) {
             GCodeWrapper::G28();
+        } else if (!strcmp(test, "M18")) {
+            GCodeWrapper::M18();
+        } else if (!strcmp(test, "invert")) {
+            mcc.invertDirection();
         } else if (!strcmp(test, "MOUT")) {
             break;
+        } else {
+            cout << "Unknown Command: \"" << test << "\"" << endl;
         }
     }
     cout << endl << endl;

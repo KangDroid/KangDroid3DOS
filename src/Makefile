@@ -4,6 +4,7 @@ TARGET=app.out
 OBJS=InnerFunction.o\
 	EndstopClass.o\
 	GCodeWrapper.o\
+	MotorControlClass.o\
 	main.o\
 
 %.o: %.c

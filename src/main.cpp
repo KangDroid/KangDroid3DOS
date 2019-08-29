@@ -43,6 +43,7 @@ void sendSignal(int cause) {
     switch (cause) {
         case INTERRUPT_CODE::AUTO_HOME_FAILED:
             cout << "Homing Failed!!" << endl << "Exiting Program!" << endl;
+            GCodeWrapper::M18();
             exit(1); 
         break;
     }
