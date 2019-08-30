@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-g -Wall -O3 -lwiringPi -I../include
+CXXFLAGS=-g -Wall -O3 -lwiringPi -lstdc++ -I../include
 TARGET=app.out
 OBJS=PinClass.o\
 	InnerFunction.o\

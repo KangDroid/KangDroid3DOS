@@ -4,4 +4,5 @@ class InnerFunction {
         static void autoHomeSimulation();
         static void getGCodeInput();
         static void moveAxis();
+        static bool seen(char a);
 };

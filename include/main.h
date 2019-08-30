@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <wiringPi.h>
 #include <unistd.h>
 #include "PinClass.h"
@@ -27,3 +28,6 @@ void sendSignal(int cause);
 void clearScreen();
 
 static MotorControlClass mcc;
+static string test;
+static string first_bits;
+static int pos;

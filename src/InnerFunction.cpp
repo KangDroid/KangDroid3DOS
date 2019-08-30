@@ -52,21 +52,47 @@ void InnerFunction::testEndstopPin() {
 }
 
 void InnerFunction::getGCodeInput() {
-    char test[256];
     cout << "GCode terminal Starts" << endl << "Input MOUT to end terminal menu." << endl;
     while (true) {
-        cin >> test;
-        if (!strcmp(test, "M119")) {
+        getline(cin, test);
+        pos = test.find(" ");
+        // First parse value
+        if (pos != -1) {
+            first_bits = test.substr(0, pos); // The rest of them stored in test
+            test.erase(0, pos + 1);
+        } else {
+            // Use test value
+            first_bits.assign(test);
+        }
+
+        if (first_bits == "M119") {
             GCodeWrapper::M119();
-        } else if(!strcmp(test, "G28")) {
+        } else if(first_bits == "G28") {
             GCodeWrapper::G28();
-        } else if (!strcmp(test, "M18")) {
+        } else if (first_bits == "M18") {
             GCodeWrapper::M18();
-        } else if (!strcmp(test, "invert")) {
+        } else if (first_bits == "invert") {
             mcc.invertDirection();
-        } else if (!strcmp(test, "G1")) {
-            GCodeWrapper::G1();
-        } else if (!strcmp(test, "MOUT")) {
+        } else if (first_bits == "G1") {
+            int speed = 0, xmm = 0, ymm = 0, zmm = 0;
+            if (seen('F')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                speed = stoi(first_bits);
+            }
+            if (seen('X')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                xmm = stoi(first_bits);
+            }
+            if (seen('Y')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                ymm = stoi(first_bits);
+            }
+            if (seen('Z')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                zmm = stoi(first_bits);
+            }
+            GCodeWrapper::G1(speed, xmm, ymm, zmm);
+        } else if (first_bits == "MOUT") {
             break;
         } else {
             cout << "Unknown Command: \"" << test << "\"" << endl;
@@ -75,6 +101,16 @@ void InnerFunction::getGCodeInput() {
     cout << endl << endl;
 }
 
+bool InnerFunction::seen(char a) {
+    pos = test.find(" ");
+    if (test.find(a) != -1) {
+        first_bits = test.substr(test.find(a), pos);
+        test.erase(test.find(a), (pos == -1) ? pos : pos + 1);
+        return true;
+    } else {
+        return false;
+    }
+}
 void InnerFunction::moveAxis() {
     // Rotate Axis
     // if endstop switched -> Stop
