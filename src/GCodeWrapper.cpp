@@ -9,5 +9,9 @@ void GCodeWrapper::M119() {
 }
 
 void GCodeWrapper::M18() {
-    mcc.controlStepper();
+    mcc.disableStepper();
+}
+
+void GCodeWrapper::G1() {
+    mcc.rotateMotor(STEPS_PER_MM::Z * 10, SPEED_MOTOR::SPEED_MID);
 }

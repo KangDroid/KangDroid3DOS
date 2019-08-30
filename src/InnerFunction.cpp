@@ -6,14 +6,14 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home X
     start_time = time(NULL);
-    mcc.controlStepper();
+    mcc.enableStepper();
     while (!(digitalRead(ES_X) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 20) {
             // Failed
             sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            mcc.rotateMotorInfinite(64);
+            mcc.rotateMotorInfinite(SPEED_MOTOR::SPEED_LOW);
         }
     }
 
@@ -64,6 +64,8 @@ void InnerFunction::getGCodeInput() {
             GCodeWrapper::M18();
         } else if (!strcmp(test, "invert")) {
             mcc.invertDirection();
+        } else if (!strcmp(test, "G1")) {
+            GCodeWrapper::G1();
         } else if (!strcmp(test, "MOUT")) {
             break;
         } else {

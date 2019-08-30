@@ -1,7 +1,8 @@
 class MotorControlClass : public PinClass {
     public:
         static void invertDirection();
-        static void controlStepper();
+        static void enableStepper();
+        static void disableStepper();
         static void rotateMotor(int steps, int speed);
         static void rotateMotorInfinite(int speed);
         MotorControlClass();
