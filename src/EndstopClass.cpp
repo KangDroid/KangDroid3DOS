@@ -1,21 +1,12 @@
 #include "main.h"
 
 void EndstopClass::initPin() {
-    for (int i = 0; i < es_pin_count; i++) {
-        pinMode(es_pin[i], mode);
-        pullUpDnControl(es_pin[i], pull_mode);
-    }
+    pullUpDnControl(ES_X, pull_mode);
+    pullUpDnControl(ES_Y, pull_mode);
+    pullUpDnControl(ES_Z, pull_mode);
 }
 
-EndstopClass::EndstopClass(int es_pin[], int mode, int pull_mode) {
-    this->es_pin = new int[es_pin_count];
-    for (int i = 0; i < es_pin_count; i++) {
-        this->es_pin[i] = es_pin[i];
-    }
-    this->mode = mode;
+EndstopClass::EndstopClass(int pull_mode) {
+    PinClass();
     this->pull_mode = pull_mode;
-}
-
-EndstopClass::~EndstopClass() {
-    delete this->es_pin;
 }

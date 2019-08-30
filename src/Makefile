@@ -1,7 +1,8 @@
 CXX=g++
 CXXFLAGS=-g -Wall -O3 -lwiringPi -I../include
 TARGET=app.out
-OBJS=InnerFunction.o\
+OBJS=PinClass.o\
+	InnerFunction.o\
 	EndstopClass.o\
 	GCodeWrapper.o\
 	MotorControlClass.o\

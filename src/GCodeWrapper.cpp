@@ -9,5 +9,5 @@ void GCodeWrapper::M119() {
 }
 
 void GCodeWrapper::M18() {
-    mcc.disableStepper();
+    mcc.controlStepper();
 }

@@ -6,8 +6,8 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home X
     start_time = time(NULL);
-    mcc.enableStepper();
-    while (!(digitalRead(pin_es_array[0]) == false)) {
+    mcc.controlStepper();
+    while (!(digitalRead(ES_X) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 20) {
             // Failed
@@ -45,9 +45,9 @@ void InnerFunction::autoHomeSimulation() {
 
 void InnerFunction::testEndstopPin() {
     cout << "Current PIN Status:" << endl;
-    for (int i = 0; i < es_pin_count; i++) {
-        cout << "PIN: " << pin_es_array[i] << ((digitalRead(pin_es_array[i]) == false) ? ": PROBED" : ": UNPROBED") << endl;
-    }
+    cout << "PIN: " << ES_X << ((digitalRead(ES_X) == false) ? ": PROBED" : ": UNPROBED") << endl;
+    cout << "PIN: " << ES_Y << ((digitalRead(ES_Y) == false) ? ": PROBED" : ": UNPROBED") << endl;
+    cout << "PIN: " << ES_Z << ((digitalRead(ES_Z) == false) ? ": PROBED" : ": UNPROBED") << endl;
     cout << endl << endl;
 }
 

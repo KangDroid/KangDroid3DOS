@@ -1,10 +1,7 @@
 #include "main.h"
 
 MotorControlClass::MotorControlClass() {
-    wiringPiSetup();
-    pinMode(MOTOR_DIR, OUTPUT);
-    pinMode(MOTOR_STEP, OUTPUT);
-    pinMode(MOTOR_OFF, OUTPUT);
+    PinClass();
 }
 
 void MotorControlClass::invertDirection() {
@@ -15,17 +12,17 @@ void MotorControlClass::invertDirection() {
     }
 }
 
-void MotorControlClass::enableStepper() {
-    digitalWrite(MOTOR_OFF, HIGH);
+void MotorControlClass::controlStepper() {
+    if (digitalRead(MOTOR_OFF) == HIGH) {
+        digitalWrite(MOTOR_OFF, LOW);
+    } else if (digitalRead(MOTOR_OFF) == LOW) {
+        digitalWrite(MOTOR_OFF, HIGH);
+    }
     usleep(500000);
-}
-        
-void MotorControlClass::disableStepper() {
-    digitalWrite(MOTOR_OFF, LOW);
 }
 
 void MotorControlClass::rotateMotor(int steps, int speed) {
-    enableStepper();
+    controlStepper();
     for (int i = 0; i < steps; i++) {
         digitalWrite(MOTOR_STEP, HIGH);
         usleep(20800/speed);

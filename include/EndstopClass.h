@@ -1,10 +1,7 @@
-class EndstopClass {
+class EndstopClass : public PinClass {
     private:
-        int * es_pin;
-        int mode;
         int pull_mode;
     public:
-        EndstopClass(int es_pin[], int mode, int pull_mode);
-        ~EndstopClass();
+        EndstopClass(int pull_mode);
         void initPin();
 };

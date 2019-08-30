@@ -1,0 +1,4 @@
+class PinClass {
+    public:
+        PinClass();
+};
