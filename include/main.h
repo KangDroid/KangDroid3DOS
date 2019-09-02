@@ -13,7 +13,8 @@
 using namespace std;
 
 enum INTERRUPT_CODE {
-    AUTO_HOME_FAILED = 0
+    AUTO_HOME_FAILED = 0,
+    SIG_OK = 1,
 };
 
 enum SPEED_MOTOR {
@@ -24,10 +25,11 @@ enum SPEED_MOTOR {
 
 int showMenu();
 void getGCodeInput();
-void sendSignal(int cause);
+int sendSignal(int cause);
 void clearScreen();
 
 static MotorControlClass mcc;
 static string test;
 static string first_bits;
 static int pos;
+static int machine_working;

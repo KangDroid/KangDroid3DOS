@@ -39,14 +39,17 @@ int showMenu() {
     return ret_val;
 }
 
-void sendSignal(int cause) {
+int sendSignal(int cause) {
     switch (cause) {
         case INTERRUPT_CODE::AUTO_HOME_FAILED:
             cout << "Homing Failed!!" << endl << "Exiting Program!" << endl;
             GCodeWrapper::M18();
             exit(1); 
         break;
+        case INTERRUPT_CODE::SIG_OK:
+        break;
     }
+    return cause;
 }
 
 #if defined(__APPLE__) || defined(__linux__) || defined(__unix__) || defined(__unix) || defined(unix)

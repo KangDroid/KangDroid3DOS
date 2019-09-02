@@ -2,14 +2,17 @@
 
 void GCodeWrapper::G28() {
     InnerFunction::autoHomeSimulation();
+    machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
 void GCodeWrapper::M119() {
     InnerFunction::testEndstopPin();
+    machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
 void GCodeWrapper::M18() {
     mcc.disableStepper();
+    machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
 void GCodeWrapper::G1(int feedrate, int x, int y, int z) {
@@ -21,4 +24,5 @@ void GCodeWrapper::G1(int feedrate, int x, int y, int z) {
         feedrate = SPEED_MOTOR::SPEED_HIGH;
     }
     mcc.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
+    machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
