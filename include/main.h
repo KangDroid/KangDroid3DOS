@@ -28,7 +28,8 @@ void getGCodeInput();
 int sendSignal(int cause);
 void clearScreen();
 
-static MotorControlClass mcc;
+static EndstopClass es(ES_X, ES_Y, ES_Z, PUD_UP);
+static MotorControlClass z_motor(MOTOR_Z_STEP, MOTOR_Z_DIR, MOTOR_OFF);
 static string test;
 static string first_bits;
 static int pos;

@@ -1,14 +1,18 @@
 #include "main.h"
 
-PinClass::PinClass() {
+PinClass::PinClass(int x, int y, int z) { // The endstop constructor
     wiringPiSetup();
-    // Motor pinout
-    pinMode(MOTOR_DIR, OUTPUT);
-    pinMode(MOTOR_STEP, OUTPUT);
-    pinMode(MOTOR_OFF, OUTPUT);
 
     // Endstop pinout
-    pinMode(ES_X, INPUT);
-    pinMode(ES_Y, INPUT);
-    pinMode(ES_Z, INPUT);
+    pinMode(x, INPUT);
+    pinMode(y, INPUT);
+    pinMode(z, INPUT);
+}
+
+PinClass::PinClass(int step, int dir) { // The Motor Constructor
+    wiringPiSetup();
+
+    // Initiate motor
+    pinMode(step, OUTPUT);
+    pinMode(dir, OUTPUT);
 }

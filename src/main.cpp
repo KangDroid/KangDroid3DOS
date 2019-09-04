@@ -4,15 +4,14 @@ int main(void) {
     int menu_val;
     // Implementation
     wiringPiSetup();
-    EndstopClass es(PUD_UP);
-    es.initPin(); //Shouldn't be destroied
+    es.initPin();
 
     do {
         menu_val = showMenu();
         switch(menu_val) {
             case 1:
                 clearScreen();
-                InnerFunction::testEndstopPin();
+                es.currentStatus();
             break;
             case 2:
                 clearScreen();

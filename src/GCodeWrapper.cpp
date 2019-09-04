@@ -6,12 +6,12 @@ void GCodeWrapper::G28() {
 }
 
 void GCodeWrapper::M119() {
-    InnerFunction::testEndstopPin();
+    es.currentStatus();
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
 void GCodeWrapper::M18() {
-    mcc.disableStepper();
+    z_motor.disableStepper();
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
@@ -23,6 +23,6 @@ void GCodeWrapper::G1(int feedrate, int x, int y, int z) {
     } else if (feedrate > 1000 && feedrate <= 5000) {
         feedrate = SPEED_MOTOR::SPEED_HIGH;
     }
-    mcc.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
+    z_motor.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }

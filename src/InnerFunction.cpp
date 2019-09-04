@@ -4,16 +4,16 @@ void InnerFunction::autoHomeSimulation() {
     int start_time;
     int end_time;
 
-    // Home X
+    // Home Z
     start_time = time(NULL);
-    mcc.enableStepper();
+    z_motor.enableStepper();
     while (!(digitalRead(ES_X) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 20) {
             // Failed
             sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            mcc.rotateMotorInfinite(SPEED_MOTOR::SPEED_LOW);
+            z_motor.rotateMotorInfinite(SPEED_MOTOR::SPEED_LOW);
         }
     }
 
@@ -43,14 +43,6 @@ void InnerFunction::autoHomeSimulation() {
     }*/
 }
 
-void InnerFunction::testEndstopPin() {
-    cout << "Current PIN Status:" << endl;
-    cout << "PIN: " << ES_X << ((digitalRead(ES_X) == false) ? ": PROBED" : ": UNPROBED") << endl;
-    cout << "PIN: " << ES_Y << ((digitalRead(ES_Y) == false) ? ": PROBED" : ": UNPROBED") << endl;
-    cout << "PIN: " << ES_Z << ((digitalRead(ES_Z) == false) ? ": PROBED" : ": UNPROBED") << endl;
-    cout << endl << endl;
-}
-
 void InnerFunction::getGCodeInput() {
     cout << "GCode terminal Starts" << endl << "Input MOUT to end terminal menu." << endl;
     while (true) {
@@ -72,7 +64,7 @@ void InnerFunction::getGCodeInput() {
         } else if (first_bits == "M18") {
             GCodeWrapper::M18();
         } else if (first_bits == "invert") {
-            mcc.invertDirection();
+            z_motor.invertDirection();
         } else if (first_bits == "G1") {
             int speed = 0, xmm = 0, ymm = 0, zmm = 0;
             sleep(10);
