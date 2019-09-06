@@ -6,6 +6,8 @@
 // Motor Pins
 #define MOTOR_Z_DIR 25
 #define MOTOR_Z_STEP 24
+#define MOTOR_X_DIR 23
+#define MOTOR_X_STEP 22
 #define MOTOR_OFF 27
 
 // Pin counter(For iteration)
@@ -16,4 +18,5 @@ enum STEPS_PER_MM {
     X = 200,
     Y = 200,
     Z = 1000,
+    E = 1000,
 };

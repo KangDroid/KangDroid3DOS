@@ -67,7 +67,6 @@ void InnerFunction::getGCodeInput() {
             z_motor.invertDirection();
         } else if (first_bits == "G1") {
             int speed = 0, xmm = 0, ymm = 0, zmm = 0;
-            sleep(10);
             if (seen('F')) {
                 first_bits = first_bits.substr(1, test.find(" "));
                 speed = stoi(first_bits);

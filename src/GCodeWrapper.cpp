@@ -23,6 +23,7 @@ void GCodeWrapper::G1(int feedrate, int x, int y, int z) {
     } else if (feedrate > 1000 && feedrate <= 5000) {
         feedrate = SPEED_MOTOR::SPEED_HIGH;
     }
-    z_motor.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
+    axis.moveX(z);
+    //z_motor.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }

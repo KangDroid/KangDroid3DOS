@@ -13,6 +13,8 @@ PinClass::PinClass(int step, int dir) { // The Motor Constructor
     wiringPiSetup();
 
     // Initiate motor
-    pinMode(step, OUTPUT);
-    pinMode(dir, OUTPUT);
+    if (step != -1 && dir != -1) {
+        pinMode(step, OUTPUT);
+        pinMode(dir, OUTPUT);
+    }
 }

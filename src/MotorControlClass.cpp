@@ -3,8 +3,10 @@
 MotorControlClass::MotorControlClass(int step, int dir, int enable) : PinClass(step, dir) {
     pinMode(enable, OUTPUT);
 
-    this->step = step;
-    this->dir = dir;
+    if (step != -1 && dir != -1) {
+        this->step = step;
+        this->dir = dir;
+    }
     this->enable = enable;
 }
 
@@ -44,4 +46,11 @@ void MotorControlClass::rotateMotorInfinite(int speed) {
     usleep(20800/speed);
     digitalWrite(this->step, LOW);
     usleep(20800/speed);
+}
+
+int MotorControlClass::retStep() {
+    return this->step;
+}
+int MotorControlClass::retDir() {
+    return this->dir;
 }

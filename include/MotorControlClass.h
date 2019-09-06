@@ -9,5 +9,7 @@ class MotorControlClass : public PinClass {
         void disableStepper();
         void rotateMotor(int steps, int speed);
         void rotateMotorInfinite(int speed);
+        int retStep();
+        int retDir();
         MotorControlClass(int step, int dir, int enable);
 };

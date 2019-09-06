@@ -8,7 +8,9 @@
 #include "GCodeWrapper.h"
 #include "InnerFunction.h"
 #include "MotorControlClass.h"
+#include "AxisControlClass.h"
 #include <cstring>
+#include <pthread.h>
 
 using namespace std;
 
@@ -30,6 +32,10 @@ void clearScreen();
 
 static EndstopClass es(ES_X, ES_Y, ES_Z, PUD_UP);
 static MotorControlClass z_motor(MOTOR_Z_STEP, MOTOR_Z_DIR, MOTOR_OFF);
+static MotorControlClass x_motor(MOTOR_X_STEP, MOTOR_X_DIR, MOTOR_OFF);
+static MotorControlClass y_motor(-1, -1, MOTOR_OFF);
+static MotorControlClass e_motor(-1, -1, MOTOR_OFF);
+static AxisControlClass axis(1);
 static string test;
 static string first_bits;
 static int pos;
