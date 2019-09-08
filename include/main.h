@@ -40,3 +40,4 @@ static string test;
 static string first_bits;
 static int pos;
 static int machine_working;
+static int x_coord = -1, y_coord = -1, z_coord = -1;

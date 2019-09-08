@@ -6,16 +6,17 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home Z
     start_time = time(NULL);
-    z_motor.enableStepper();
+    x_motor.enableStepper();
     while (!(digitalRead(ES_X) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 20) {
             // Failed
             sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            z_motor.rotateMotorInfinite(SPEED_MOTOR::SPEED_LOW);
+            x_motor.rotateMotorInfinite(SPEED_MOTOR::SPEED_LOW);
         }
     }
+    x_coord = 0;
 
     // Home Y
     /*start_time = time(NULL);
@@ -28,6 +29,7 @@ void InnerFunction::autoHomeSimulation() {
             cout << "Moving Y..." << endl;
         }
     }
+    y_coord = 0;
 
     // Home Z
     start_time = time(NULL);
@@ -40,7 +42,8 @@ void InnerFunction::autoHomeSimulation() {
             clearScreen();
             cout << "Moving Z..." << endl;
         }
-    }*/
+    }
+    z_coord = 0; */
 }
 
 void InnerFunction::getGCodeInput() {
@@ -63,8 +66,8 @@ void InnerFunction::getGCodeInput() {
             GCodeWrapper::G28();
         } else if (first_bits == "M18") {
             GCodeWrapper::M18();
-        } else if (first_bits == "invert") {
-            z_motor.invertDirection();
+        /*} else if (first_bits == "invert") {
+            z_motor.invertDirection(); */
         } else if (first_bits == "G1") {
             int speed = 0, xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
@@ -103,6 +106,13 @@ bool InnerFunction::seen(char a) {
         return false;
     }
 }
+
+void InnerFunction::showInfoAxis() {
+    cout << "X: " << x_coord << endl;
+    cout << "Y: " << y_coord << endl;
+    cout << "Z: " << z_coord << endl;
+}
+
 void InnerFunction::moveAxis() {
     // Rotate Axis
     // if endstop switched -> Stop
