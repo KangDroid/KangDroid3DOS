@@ -3,9 +3,10 @@
 #define ES_Y 0
 #define ES_Z 2
 
+
 // Motor Pins
-#define MOTOR_Z_DIR 25
-#define MOTOR_Z_STEP 24
+#define MOTOR_Z_DIR 21
+#define MOTOR_Z_STEP 30
 #define MOTOR_X_DIR 23
 #define MOTOR_X_STEP 22
 #define MOTOR_OFF 27

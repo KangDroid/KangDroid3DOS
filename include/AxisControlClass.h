@@ -6,10 +6,8 @@ class AxisControlClass {
         int corexy = 0;
     public:
         AxisControlClass(int isCore);
-        void moveX(int length);
-        void moveY(int length);
-        void moveZ(int length);
-        void moveE(int length);
-        static void *wrapperTesting(void *data);
-        static void *wrapperTestingTwo(void *data);
+        void moveX(int length, int speed);
+        void moveY(int length, int speed);
+        void moveZ(int length, int speed);
+        void moveE(int length, int speed);
 };

@@ -32,7 +32,7 @@ void MotorControlClass::disableStepper() {
 }
 
 void MotorControlClass::rotateMotor(int steps, int speed) {
-    enableStepper();
+    //enableStepper();
     for (int i = 0; i < steps; i++) {
         digitalWrite(this->step, HIGH);
         usleep(20800/speed);
