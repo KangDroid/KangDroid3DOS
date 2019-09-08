@@ -31,9 +31,9 @@ int sendSignal(int cause);
 void clearScreen();
 
 static EndstopClass es(ES_X, ES_Y, ES_Z, PUD_UP);
-static MotorControlClass z_motor(MOTOR_Z_STEP, MOTOR_Z_DIR, MOTOR_OFF);
+static MotorControlClass z_motor(-1, -1, MOTOR_OFF);
 static MotorControlClass x_motor(MOTOR_X_STEP, MOTOR_X_DIR, MOTOR_OFF);
-static MotorControlClass y_motor(-1, -1, MOTOR_OFF);
+static MotorControlClass y_motor(MOTOR_Y_STEP, MOTOR_Y_DIR, MOTOR_OFF);
 static MotorControlClass e_motor(-1, -1, MOTOR_OFF);
 static AxisControlClass axis(1);
 static string test;
