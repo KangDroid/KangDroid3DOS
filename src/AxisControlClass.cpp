@@ -25,7 +25,14 @@ void AxisControlClass::moveX(int length, int speed) {
             usleep(20800/speed);
         }
     } else {
-        x_motor.rotateMotor(length * STEPS_PER_MM::X, SPEED_MOTOR::SPEED_LOW);
+        // NORMAL Printer mechanism like Anet, ETC(NOT SF)
+        if(x_coord != -1) {
+            digitalWrite(x_motor.retDir(), (x_coord < length) ? LOW:HIGH);
+            x_coord += length;
+        } else if (x_coord == -1) {
+            digitalWrite(x_motor.retDir(), HIGH);
+        }
+        x_motor.rotateMotor(length * STEPS_PER_MM::X, speed);
     }
 }
 void AxisControlClass::moveY(int length, int speed) {
@@ -50,7 +57,14 @@ void AxisControlClass::moveY(int length, int speed) {
             usleep(20800/speed);
         }
     } else {
-        y_motor.rotateMotor(length * STEPS_PER_MM::Y, SPEED_MOTOR::SPEED_LOW);
+        // NORMAL Printer mechanism like Anet, ETC(NOT SF)
+        if (y_coord != -1) {
+            digitalWrite(y_motor.retDir(), (y_coord < length) ? LOW:HIGH);
+            y_coord += length;
+        } else if (y_coord == -1) {
+            digitalWrite(y_motor.retDir(), HIGH);
+        }
+        y_motor.rotateMotor(length * STEPS_PER_MM::Y, speed);
     }
     if (y_coord != -1) {
         y_coord += length;
