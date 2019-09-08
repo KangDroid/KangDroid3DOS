@@ -1,13 +1,13 @@
 CXX=g++
-CXXFLAGS=-Wall -O3 -lwiringPi -lpthread -lstdc++ -I../include
+CXXFLAGS=-Wall -Wno-unused-variable -O3 -lwiringPi -I../include
 TARGET=app.out
-OBJS=PinClass.o\
-	InnerFunction.o\
-	EndstopClass.o\
-	GCodeWrapper.o\
-	MotorControlClass.o\
-	AxisControlClass.o\
-	main.o\
+OBJS=PinClass.o \
+	InnerFunction.o \
+	EndstopClass.o \
+	GCodeWrapper.o \
+	MotorControlClass.o \
+	AxisControlClass.o \
+	main.o \
 
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -c $< -o $@
