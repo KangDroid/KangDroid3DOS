@@ -14,6 +14,7 @@ PinClass::PinClass(int step, int dir) { // The Motor Constructor
 
     if (step == dir) {
         cout << "Both pins SHOULD NOT BE SAME" << endl;
+        cout << "STEP: " << step << " DIR: " << dir << endl;
     } else {
         // Initiate motor
         if (step != -1 && dir != -1) {
