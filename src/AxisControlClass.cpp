@@ -8,7 +8,7 @@ void AxisControlClass::moveX(int length, int speed) {
         if (x_coord != -1) {
             digitalWrite(y_motor.retDir(), (x_coord < length) ? HIGH:LOW);
             digitalWrite(x_motor.retDir(), (x_coord < length) ? LOW:HIGH);
-            x_coord += length;
+            x_coord = length;
         } else if (x_coord == -1) {
             //positive
             digitalWrite(y_motor.retDir(), HIGH);
@@ -21,7 +21,7 @@ void AxisControlClass::moveX(int length, int speed) {
         // NORMAL Printer mechanism like Anet, ETC(NOT SF)
         if(x_coord != -1) {
             digitalWrite(x_motor.retDir(), (x_coord < length) ? LOW:HIGH);
-            x_coord += length;
+            x_coord = length;
         } else if (x_coord == -1) {
             digitalWrite(x_motor.retDir(), HIGH);
         }
@@ -33,7 +33,7 @@ void AxisControlClass::moveY(int length, int speed) {
         if (y_coord != -1) {
             digitalWrite(y_motor.retDir(), (y_coord < length) ? HIGH:LOW);
             digitalWrite(x_motor.retDir(), (y_coord < length) ? HIGH:LOW);
-            y_coord += length;
+            y_coord = length;
         } else if (y_coord == -1) {
             //positive
             digitalWrite(y_motor.retDir(), HIGH);
@@ -46,20 +46,17 @@ void AxisControlClass::moveY(int length, int speed) {
         // NORMAL Printer mechanism like Anet, ETC(NOT SF)
         if (y_coord != -1) {
             digitalWrite(y_motor.retDir(), (y_coord < length) ? LOW:HIGH);
-            y_coord += length;
+            y_coord = length;
         } else if (y_coord == -1) {
             digitalWrite(y_motor.retDir(), HIGH);
         }
         y_motor.rotateMotor(length * STEPS_PER_MM::Y, speed);
     }
-    if (y_coord != -1) {
-        y_coord += length;
-    }
 }
 void AxisControlClass::moveZ(int length, int speed) {
     z_motor.rotateMotor(length * STEPS_PER_MM::Z, SPEED_MOTOR::SPEED_LOW);
-    if (y_coord != -1) {
-        z_coord += length;
+    if (z_coord != -1) {
+        z_coord = length;
     }
 }
 void AxisControlClass::moveE(int length, int speed) {
