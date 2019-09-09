@@ -12,7 +12,7 @@ PinClass::PinClass(int x, int y, int z) { // The endstop constructor
 PinClass::PinClass(int step, int dir) { // The Motor Constructor
     wiringPiSetup();
 
-    if (step == dir) {
+    if ((step == dir) && (step != -1) && (dir != -1)) {
         cout << "Both pins SHOULD NOT BE SAME" << endl;
         cout << "STEP: " << step << " DIR: " << dir << endl;
     } else {
