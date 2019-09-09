@@ -25,12 +25,12 @@ enum SPEED_MOTOR {
     SPEED_HIGH = 128,
 };
 
-enum AXIS {
-    X = 0,
-    Y = 1,
-    Z = 2,
-    E = 3,
-};
+namespace AXIS {
+    const int X = 0;
+    const int Y = 1;
+    const int Z = 2;
+    const int E = 3;
+}
 
 int showMenu();
 void getGCodeInput();

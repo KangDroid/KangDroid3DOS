@@ -38,7 +38,7 @@ void InnerFunction::autoHomeSimulation() {
     digitalWrite(x_motor.retDir(), LOW);
     //TODO: Surround those digitalWrite with function or somehow implement it --> Beautify
 
-    while (!(digitalRead(pin_es_array[1]) == false)) {
+    while (!(digitalRead(ES_Y) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 20) {
             // Failed
