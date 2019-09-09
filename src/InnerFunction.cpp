@@ -126,6 +126,7 @@ bool InnerFunction::seen(char a) {
 }
 
 void InnerFunction::showInfoAxis() {
+    cout << "Current Location Information:" << endl;
     cout << "X: " << x_coord << endl;
     cout << "Y: " << y_coord << endl;
     cout << "Z: " << z_coord << endl;
