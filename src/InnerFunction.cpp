@@ -84,8 +84,8 @@ void InnerFunction::getGCodeInput() {
             GCodeWrapper::G28();
         } else if (first_bits == "M18") {
             GCodeWrapper::M18();
-        /*} else if (first_bits == "invert") {
-            z_motor.invertDirection(); */
+        } else if (first_bits == "M114") {
+            GCodeWrapper::M114();
         } else if (first_bits == "G1") {
             int speed = 0, xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
