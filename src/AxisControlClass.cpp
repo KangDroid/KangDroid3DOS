@@ -79,6 +79,21 @@ void AxisControlClass::moveZ(int length, int speed) {
 void AxisControlClass::moveE(int length, int speed) {
     e_motor.rotateMotor(length * STEPS_PER_MM::E, SPEED_MOTOR::SPEED_LOW);
 }
+
+/**
+ * Only for COREXY Devices
+ */
+void AxisControlClass::moveAxisInf(int speed) {
+    digitalWrite(y_motor.retStep(), HIGH);
+    usleep(20800/speed);
+    digitalWrite(y_motor.retStep(), LOW);
+
+    digitalWrite(x_motor.retStep(), HIGH);
+    usleep(20800/speed);
+    digitalWrite(x_motor.retStep(), LOW);
+    usleep(20800/speed);
+}
+
 AxisControlClass::AxisControlClass(int isCore) {
     this->corexy = isCore;
 }

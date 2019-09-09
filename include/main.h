@@ -25,6 +25,13 @@ enum SPEED_MOTOR {
     SPEED_HIGH = 128,
 };
 
+enum AXIS {
+    X = 0,
+    Y = 1,
+    Z = 2,
+    E = 3,
+};
+
 int showMenu();
 void getGCodeInput();
 int sendSignal(int cause);

@@ -10,4 +10,5 @@ class AxisControlClass {
         void moveY(int length, int speed);
         void moveZ(int length, int speed);
         void moveE(int length, int speed);
+        void moveAxisInf(int speed);
 };

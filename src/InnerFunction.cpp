@@ -1,38 +1,56 @@
 #include "main.h"
 
+/**
+ * Auto Homing Mechanism:
+ * basically motor moves to minimum endstop(which means axis should go to 0)
+ * if endstop detected, motor slowly(reverse about a few millimetre, and slowly detect endstop again)
+ * Putting move(axis) to -10 so it will go infinite
+ */ 
 void InnerFunction::autoHomeSimulation() {
     int start_time;
     int end_time;
 
-    // Home Z
+    // Home X
     start_time = time(NULL);
     x_motor.enableStepper();
+
+    /*X/Y Motor direction changes because it is corexy*/
+    digitalWrite(y_motor.retDir(), LOW);
+    digitalWrite(x_motor.retDir(), HIGH);
+    //TODO: Surround those digitalWrite with function or somehow implement it --> Beautify
+
     while (!(digitalRead(ES_X) == false)) {
         end_time = time(NULL);
         if ((end_time - start_time) == 20) {
             // Failed
             sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            x_motor.rotateMotorInfinite(SPEED_MOTOR::SPEED_LOW);
+            axis.moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
         }
     }
     x_coord = 0;
 
     // Home Y
-    /*start_time = time(NULL);
+    start_time = time(NULL);
+
+    /*X/Y Motor direction changes because it is corexy*/
+    digitalWrite(y_motor.retDir(), LOW);
+    digitalWrite(x_motor.retDir(), LOW);
+    //TODO: Surround those digitalWrite with function or somehow implement it --> Beautify
+
     while (!(digitalRead(pin_es_array[1]) == false)) {
         end_time = time(NULL);
-        if ((end_time - start_time) == 5) {
+        if ((end_time - start_time) == 20) {
             // Failed
+            sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            clearScreen();
-            cout << "Moving Y..." << endl;
+            axis.moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
         }
     }
     y_coord = 0;
 
     // Home Z
-    start_time = time(NULL);
+    /*start_time = time(NULL);
     while (!(digitalRead(pin_es_array[2]) == false)) {
         end_time = time(NULL);
         
