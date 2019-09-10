@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <wiringPi.h>
+#include <time.h>
 #include <unistd.h>
 #include "PinClass.h"
 #include "pins.h"

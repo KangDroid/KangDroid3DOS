@@ -54,7 +54,11 @@ void AxisControlClass::moveY(int length, int speed) {
     }
 }
 void AxisControlClass::moveZ(int length, int speed) {
+    int st_time, ed_time;
+    st_time = time(NULL);
     z_motor.rotateMotor(length * STEPS_PER_MM::Z, SPEED_MOTOR::SPEED_LOW);
+    ed_time = time(NULL);
+    cout << "TIME: " << ed_time - st_time << endl;
     if (z_coord != -1) {
         z_coord = length;
     }
