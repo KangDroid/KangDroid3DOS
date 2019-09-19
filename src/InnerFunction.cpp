@@ -86,6 +86,10 @@ void InnerFunction::getGCodeInput() {
             GCodeWrapper::M18();
         } else if (first_bits == "M114") {
             GCodeWrapper::M114();
+        } else if (first_bits == "HOME") {
+            x_coord = 0;
+            y_coord = 0;
+            z_coord = 0;
         } else if (first_bits == "G1") {
             int speed = 0, xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
