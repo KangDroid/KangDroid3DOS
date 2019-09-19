@@ -11,4 +11,6 @@ class AxisControlClass {
         void moveZ(int length, int speed);
         void moveE(int length, int speed);
         void moveAxisInf(int speed);
+        void moveTest();
+        void calculateMovements(int target_x, int target_y, int* stp_x, int* stp_y);
 };
