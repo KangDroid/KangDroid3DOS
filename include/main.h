@@ -11,7 +11,7 @@
 #include "MotorControlClass.h"
 #include "AxisControlClass.h"
 #include <cstring>
-#include <pthread.h>
+#include <thread>
 
 using namespace std;
 

@@ -3,6 +3,24 @@
  */
 #include "main.h"
 
+void AxisControlClass::moveTestX(int speed, int steps) {
+    for (int step_x = 0; step_x < steps; step_x++) {
+        digitalWrite(x_motor.retStep(), HIGH);
+        usleep(20800/speed);
+        digitalWrite(x_motor.retStep(), LOW);
+        usleep(20800/speed);
+    } 
+}
+
+void AxisControlClass::moveTestY(int speed, int stpes) {
+    for (int step_x = 0; step_x < steps; step_x++) {
+        digitalWrite(y_motor.retStep(), HIGH);
+        usleep(20800/speed);
+        digitalWrite(y_motor.retStep(), LOW);
+        usleep(20800/speed);
+    } 
+}
+
 void AxisControlClass::moveTest() {
     /**
      * 1. Get current cooord
@@ -18,7 +36,10 @@ void AxisControlClass::moveTest() {
     digitalWrite(y_motor.retDir(), (stp_y >= 0) ? HIGH:LOW);
     digitalWrite(x_motor.retDir(), (stp_x >= 0) ? HIGH:LOW);
 
-    while (true) {
+    thread tx(moveTestX, 32, stp_x);
+    thread ty(moveTestY, 32, stp_y);
+
+    /*while (true) {
         if (steps_cur <= stp_x) {
             digitalWrite(x_motor.retStep(), HIGH);
             usleep(20800/speed);
@@ -36,7 +57,7 @@ void AxisControlClass::moveTest() {
         } else {
             run = 0;
         }
-    }
+    }*/
 }
 
 void AxisControlClass::calculateMovements(int target_x, int target_y, int* stp_x, int* stp_y) {
