@@ -4,20 +4,23 @@
 #include "main.h"
 
 void AxisControlClass::moveTestX(int speed, int steps) {
+    //cout << "X Working" << endl;
     for (int step_x = 0; step_x < steps; step_x++) {
         digitalWrite(x_motor.retStep(), HIGH);
         usleep(20800/speed);
         digitalWrite(x_motor.retStep(), LOW);
         usleep(20800/speed);
+        cout << "X Working" << endl;
     } 
 }
 
-void AxisControlClass::moveTestY(int speed, int stpes) {
-    for (int step_x = 0; step_x < steps; step_x++) {
+void AxisControlClass::moveTestY(int speed, int steps) {
+    for (int step_y = 0; step_y < steps; step_y++) {
         digitalWrite(y_motor.retStep(), HIGH);
         usleep(20800/speed);
         digitalWrite(y_motor.retStep(), LOW);
         usleep(20800/speed);
+        cout << "Y Working" << endl;
     } 
 }
 
@@ -29,35 +32,36 @@ void AxisControlClass::moveTest() {
      * 4. Calculate STP(A), STP(B)
      * 5. Move it
      */
-    int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1;
-    calculateMovements(10, 10, &stp_x, &stp_y);
+    int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1, mul;
+    int spd_x = 32, spd_y = 32;
+    calculateMovements(10, 20, &stp_x, &stp_y);
+    cout << "STP_X: " << stp_x << endl;
+    cout << "STP_Y: " << stp_y << endl;
 
     // Default to high
     digitalWrite(y_motor.retDir(), (stp_y >= 0) ? HIGH:LOW);
+    stp_x = (stp_x < 0) ? -stp_x : stp_x;
     digitalWrite(x_motor.retDir(), (stp_x >= 0) ? HIGH:LOW);
+    stp_y = (stp_y < 0) ? -stp_y : stp_y;
 
-    thread tx(moveTestX, 32, stp_x);
-    thread ty(moveTestY, 32, stp_y);
+    if (stp_x > stp_y) {
+        mul = stp_x/stp_y;
+        spd_y = spd_x / mul;
+        cout << "SPEED OF Y: " << spd_y << endl;
+    } else {
+        mul = stp_y/stp_x;
+        spd_x = spd_y / mul;
+        cout << "SPEED OF X: " << spd_x << endl; 
+    }
 
-    /*while (true) {
-        if (steps_cur <= stp_x) {
-            digitalWrite(x_motor.retStep(), HIGH);
-            usleep(20800/speed);
-            digitalWrite(x_motor.retStep(), LOW);
-            if (!run) {
-                usleep(20800/speed);
-            }
-        }
+    thread tx(moveTestX, spd_x, stp_x);
+    thread ty(moveTestY, spd_y, stp_y);
 
-        if (steps_cur <= stp_y) {
-            digitalWrite(y_motor.retStep(), HIGH);
-            usleep(20800/speed);
-            digitalWrite(y_motor.retStep(), LOW);
-            usleep(20800/speed);
-        } else {
-            run = 0;
-        }
-    }*/
+    /**
+     * Use join or detach.
+     */
+    tx.join();
+    ty.join();
 }
 
 void AxisControlClass::calculateMovements(int target_x, int target_y, int* stp_x, int* stp_y) {
@@ -86,7 +90,7 @@ void AxisControlClass::moveX(int length, int speed) {
         }
     } else {
         // NORMAL Printer mechanism like Anet, ETC(NOT SF)
-        if(x_coord != -1) {
+        if (x_coord != -1) {
             digitalWrite(x_motor.retDir(), (x_coord < length) ? LOW:HIGH);
             x_coord = length;
         } else if (x_coord == -1) {

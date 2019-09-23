@@ -21,6 +21,9 @@ int main(void) {
                 clearScreen();
                 InnerFunction::getGCodeInput();
             break;
+            case 4:
+                AxisControlClass::moveTest();
+            break;
         }
     } while(menu_val != 0);
     return 0;
