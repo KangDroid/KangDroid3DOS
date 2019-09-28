@@ -5,10 +5,10 @@
 
 
 // Motor Pins
-#define MOTOR_Y_DIR 21
-#define MOTOR_Y_STEP 30
+#define MOTOR_Y_DIR 30
+#define MOTOR_Y_STEP 22
 #define MOTOR_X_DIR 23
-#define MOTOR_X_STEP 22
+#define MOTOR_X_STEP 21
 #define MOTOR_OFF 27
 
 // Pin counter(For iteration)

@@ -1,7 +1,8 @@
 CXX=g++
 CXXFLAGS=-Wall -Wno-unused-variable -O3 -lwiringPi -lpthread -I../include
 TARGET=app.out
-OBJS=PinClass.o \
+OBJS=timer.o\
+	PinClass.o \
 	InnerFunction.o \
 	EndstopClass.o \
 	GCodeWrapper.o \

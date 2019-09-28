@@ -10,10 +10,21 @@
 #include "InnerFunction.h"
 #include "MotorControlClass.h"
 #include "AxisControlClass.h"
+#include "timer.h"
 #include <cstring>
 #include <thread>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <stdlib.h>
+
+#define BCM2708_ST_BASE 0x3F003000 /* BCM 2835 System Timer */
 
 using namespace std;
+
+
+static volatile unsigned *TIMER_registers;
 
 enum INTERRUPT_CODE {
     AUTO_HOME_FAILED = 0,

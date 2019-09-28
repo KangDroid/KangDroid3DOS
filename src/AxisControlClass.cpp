@@ -7,21 +7,23 @@ void AxisControlClass::moveTestX(int speed, int steps) {
     //cout << "X Working" << endl;
     for (int step_x = 0; step_x < steps; step_x++) {
         digitalWrite(x_motor.retStep(), HIGH);
-        usleep(20800/speed);
+        Timer::sleep_kangdroid(20800/speed);
         digitalWrite(x_motor.retStep(), LOW);
-        usleep(20800/speed);
-        cout << "X Working" << endl;
+        Timer::sleep_kangdroid(20800/speed);
+        //cout << "X Working" << endl;
     } 
+    cout << "X Finished" << endl;
 }
 
 void AxisControlClass::moveTestY(int speed, int steps) {
     for (int step_y = 0; step_y < steps; step_y++) {
         digitalWrite(y_motor.retStep(), HIGH);
-        usleep(20800/speed);
+        Timer::sleep_kangdroid(20800/speed);
         digitalWrite(y_motor.retStep(), LOW);
-        usleep(20800/speed);
-        cout << "Y Working" << endl;
+        Timer::sleep_kangdroid(20800/speed);
+        //cout << "Y Working" << endl;
     } 
+    cout << "Y Finished" << endl;
 }
 
 void AxisControlClass::moveTest() {
@@ -53,7 +55,7 @@ void AxisControlClass::moveTest() {
         spd_x = spd_y / mul;
         cout << "SPEED OF X: " << spd_x << endl; 
     }
-
+    Timer::TIMER_Init();
     thread tx(moveTestX, spd_x, stp_x);
     thread ty(moveTestY, spd_y, stp_y);
 
