@@ -92,13 +92,9 @@ void InnerFunction::getGCodeInput() {
         } else if (first_bits == "M114") {
             GCodeWrapper::M114();
         } else if (first_bits == "HOME") {
-            if (coord == NULL) {
-                cout << "NULL" << endl;
-            } else {
-                coord->setX(0);
-                coord->setY(0);
-                coord->setZ(0);
-            }
+            coord->setX(0);
+            coord->setY(0);
+            coord->setZ(0);
         } else if (first_bits == "G1") {
             int speed = 0, xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
@@ -117,7 +113,6 @@ void InnerFunction::getGCodeInput() {
                 first_bits = first_bits.substr(1, test.find(" "));
                 zmm = stoi(first_bits);
             }
-            cout << "COORD(X, Y): " << coord->retX() << " " << coord->retY() << endl;
             GCodeWrapper::G1(speed, xmm, ymm, zmm);
         } else if (first_bits == "MOUT") {
             break;

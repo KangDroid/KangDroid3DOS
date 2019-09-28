@@ -66,12 +66,8 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
 
 void AxisControlClass::calculateMovements(int target_x, int target_y, int* stp_x, int* stp_y) {
     // Calculate dx, dy
-    if (coord == NULL)
-        cout <<"NULL!" << endl;
     int dx = coord->retX() - target_x;
-    cout << "DX: " << coord->retX() << endl;
     int dy = coord->retY() - target_y;
-    cout << "DY: " << coord->retX() << endl;
 
     // Calculate STP
     *stp_x = STEPS_PER_MM::X * (dx + dy);
@@ -83,7 +79,6 @@ void AxisControlClass::moveZ(int length, int speed) {
     st_time = time(NULL);
     z_motor->rotateMotor(length * STEPS_PER_MM::Z, SPEED_MOTOR::SPEED_LOW);
     ed_time = time(NULL);
-    cout << "TIME: " << ed_time - st_time << endl;
     if (coord->retZ() != -1) {
         coord->setZ(length);
     }
