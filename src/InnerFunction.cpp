@@ -28,7 +28,7 @@ void InnerFunction::autoHomeSimulation() {
             axis.moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
         }
     }
-    x_coord = 0;
+    coord.setX(0);
 
     // Home Y
     start_time = time(NULL);
@@ -47,7 +47,7 @@ void InnerFunction::autoHomeSimulation() {
             axis.moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
         }
     }
-    y_coord = 0;
+    coord.setY(0);
 
     // Home Z
     /*start_time = time(NULL);
@@ -61,7 +61,7 @@ void InnerFunction::autoHomeSimulation() {
             cout << "Moving Z..." << endl;
         }
     }
-    z_coord = 0; */
+    coord.setZ(0);; */
 }
 
 void InnerFunction::getGCodeInput() {
@@ -91,9 +91,9 @@ void InnerFunction::getGCodeInput() {
         } else if (first_bits == "M114") {
             GCodeWrapper::M114();
         } else if (first_bits == "HOME") {
-            x_coord = 0;
-            y_coord = 0;
-            z_coord = 0;
+            coord.setX(0);
+            coord.setY(0);
+            coord.setZ(0);
         } else if (first_bits == "G1") {
             int speed = 0, xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
@@ -135,9 +135,9 @@ bool InnerFunction::seen(char a) {
 
 void InnerFunction::showInfoAxis() {
     cout << "Current Location Information:" << endl;
-    cout << "X: " << x_coord << endl;
-    cout << "Y: " << y_coord << endl;
-    cout << "Z: " << z_coord << endl;
+    cout << "X: " << coord.retX() << endl;
+    cout << "Y: " << coord.retY() << endl;
+    cout << "Z: " << coord.retZ() << endl;
 }
 
 void InnerFunction::moveAxis() {

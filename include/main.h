@@ -11,6 +11,7 @@
 #include "MotorControlClass.h"
 #include "AxisControlClass.h"
 #include "timer.h"
+#include "coord.h"
 #include <cstring>
 #include <thread>
 #include <sys/types.h>
@@ -56,8 +57,8 @@ static MotorControlClass x_motor(MOTOR_X_STEP, MOTOR_X_DIR, MOTOR_OFF);
 static MotorControlClass y_motor(MOTOR_Y_STEP, MOTOR_Y_DIR, MOTOR_OFF);
 static MotorControlClass e_motor(-1, -1, MOTOR_OFF);
 static AxisControlClass axis(1);
+static Coord coord;
 static string test;
 static string first_bits;
 static int pos;
 static int machine_working;
-static int x_coord = -1, y_coord = -1, z_coord = -1;

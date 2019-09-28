@@ -28,9 +28,9 @@ void MotorControlClass::disableStepper() {
     if (digitalRead(this->enable) == HIGH) {
         digitalWrite(this->enable, LOW);
     }
-    x_coord = -1;
-    y_coord = -1;
-    z_coord = -1;
+    coord.setX(-1);
+    coord.setY(-1);
+    coord.setZ(-1);
     usleep(500000);
 }
 
