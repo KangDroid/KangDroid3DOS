@@ -21,7 +21,7 @@ void AxisControlClass::moveTestY(int speed, int steps) {
     } 
 }
 
-void AxisControlClass::moveTest() {
+void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
     /**
      * 1. Get current cooord
      * 2. Get Target Coord
@@ -31,7 +31,8 @@ void AxisControlClass::moveTest() {
      */
     int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1, mul;
     int spd_x = 32, spd_y = 32;
-    calculateMovements(10, 20, &stp_x, &stp_y);
+
+    calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
     cout << "STP_X: " << stp_x << endl;
     cout << "STP_Y: " << stp_y << endl;
 
@@ -64,64 +65,16 @@ void AxisControlClass::moveTest() {
 
 void AxisControlClass::calculateMovements(int target_x, int target_y, int* stp_x, int* stp_y) {
     // Calculate dx, dy
-    int dx = x_coord - target_x;
-    int dy = y_coord - target_y;
+    int dx = 0 - target_x;
+    cout << "DX: " << dx << endl;
+    int dy = 0 - target_y;
+    cout << "DY: " << dy << endl;
 
     // Calculate STP
     *stp_x = STEPS_PER_MM::X * (dx + dy);
     *stp_y = STEPS_PER_MM::Y * (dy - dx);
 }
 
-void AxisControlClass::moveX(int length, int speed) {
-    if (corexy) {
-        if (x_coord != -1) {
-            digitalWrite(y_motor.retDir(), (x_coord < length) ? HIGH:LOW);
-            digitalWrite(x_motor.retDir(), (x_coord < length) ? LOW:HIGH);
-            x_coord = length;
-        } else if (x_coord == -1) {
-            //positive
-            digitalWrite(y_motor.retDir(), HIGH);
-            digitalWrite(x_motor.retDir(), LOW);
-        }
-        for (int i = 0; i < STEPS_PER_MM::X * length; i++) { // TODO: Motor naming
-            this->moveAxisInf(speed);
-        }
-    } else {
-        // NORMAL Printer mechanism like Anet, ETC(NOT SF)
-        if (x_coord != -1) {
-            digitalWrite(x_motor.retDir(), (x_coord < length) ? LOW:HIGH);
-            x_coord = length;
-        } else if (x_coord == -1) {
-            digitalWrite(x_motor.retDir(), HIGH);
-        }
-        x_motor.rotateMotor(length * STEPS_PER_MM::X, speed);
-    }
-}
-void AxisControlClass::moveY(int length, int speed) {
-    if (corexy) {
-        if (y_coord != -1) {
-            digitalWrite(y_motor.retDir(), (y_coord < length) ? HIGH:LOW);
-            digitalWrite(x_motor.retDir(), (y_coord < length) ? HIGH:LOW);
-            y_coord = length;
-        } else if (y_coord == -1) {
-            //positive
-            digitalWrite(y_motor.retDir(), HIGH);
-            digitalWrite(x_motor.retDir(), HIGH);
-        }
-        for (int i = 0; i < STEPS_PER_MM::Y * length; i++) { // TODO: Motor naming
-            this->moveAxisInf(speed);
-        }
-    } else {
-        // NORMAL Printer mechanism like Anet, ETC(NOT SF)
-        if (y_coord != -1) {
-            digitalWrite(y_motor.retDir(), (y_coord < length) ? LOW:HIGH);
-            y_coord = length;
-        } else if (y_coord == -1) {
-            digitalWrite(y_motor.retDir(), HIGH);
-        }
-        y_motor.rotateMotor(length * STEPS_PER_MM::Y, speed);
-    }
-}
 void AxisControlClass::moveZ(int length, int speed) {
     int st_time, ed_time;
     st_time = time(NULL);

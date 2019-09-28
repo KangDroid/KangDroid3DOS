@@ -16,8 +16,8 @@
 #define MOTOR_PIN_COUNT 3
 
 enum STEPS_PER_MM {
-    X = 200,
-    Y = 200,
-    Z = 1000,
+    X = 50,
+    Y = 50,
+    Z = 250,
     E = 1000,
 };

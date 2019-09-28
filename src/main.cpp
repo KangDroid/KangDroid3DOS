@@ -22,7 +22,7 @@ int main(void) {
                 InnerFunction::getGCodeInput();
             break;
             case 4:
-                AxisControlClass::moveTest();
+                AxisControlClass::moveTest(10, 0);
             break;
         }
     } while(menu_val != 0);
