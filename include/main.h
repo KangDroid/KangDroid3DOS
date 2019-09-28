@@ -26,9 +26,6 @@
 
 using namespace std;
 
-
-static volatile unsigned *TIMER_registers;
-
 enum INTERRUPT_CODE {
     AUTO_HOME_FAILED = 0,
     SIG_OK = 1,

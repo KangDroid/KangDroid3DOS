@@ -2,6 +2,8 @@
 
 #define BCM2708_ST_BASE 0x3F003000 /* BCM 2835 System Timer */
 
+static volatile unsigned *TIMER_registers;
+
 void Timer::sleep_kangdroid(unsigned int usleep) {
     unsigned int st_time, ed_time;
     st_time = TIMER_GetSysTick();
