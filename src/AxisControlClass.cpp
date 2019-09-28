@@ -4,15 +4,12 @@
 #include "main.h"
 
 void AxisControlClass::moveTestX(int speed, int steps) {
-    //cout << "X Working" << endl;
     for (int step_x = 0; step_x < steps; step_x++) {
         digitalWrite(x_motor.retStep(), HIGH);
         Timer::sleep_kangdroid(20800/speed);
         digitalWrite(x_motor.retStep(), LOW);
         Timer::sleep_kangdroid(20800/speed);
-        //cout << "X Working" << endl;
-    } 
-    cout << "X Finished" << endl;
+    }
 }
 
 void AxisControlClass::moveTestY(int speed, int steps) {
@@ -21,9 +18,7 @@ void AxisControlClass::moveTestY(int speed, int steps) {
         Timer::sleep_kangdroid(20800/speed);
         digitalWrite(y_motor.retStep(), LOW);
         Timer::sleep_kangdroid(20800/speed);
-        //cout << "Y Working" << endl;
     } 
-    cout << "Y Finished" << endl;
 }
 
 void AxisControlClass::moveTest() {
@@ -46,15 +41,16 @@ void AxisControlClass::moveTest() {
     digitalWrite(x_motor.retDir(), (stp_x >= 0) ? HIGH:LOW);
     stp_y = (stp_y < 0) ? -stp_y : stp_y;
 
+    // Calculate speed
     if (stp_x > stp_y) {
         mul = stp_x/stp_y;
         spd_y = spd_x / mul;
-        cout << "SPEED OF Y: " << spd_y << endl;
     } else {
         mul = stp_y/stp_x;
         spd_x = spd_y / mul;
-        cout << "SPEED OF X: " << spd_x << endl; 
     }
+
+    // Initiate HW Clock and start thread.
     Timer::TIMER_Init();
     thread tx(moveTestX, spd_x, stp_x);
     thread ty(moveTestY, spd_y, stp_y);
