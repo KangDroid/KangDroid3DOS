@@ -66,6 +66,10 @@ void InnerFunction::autoHomeSimulation() {
 
 void InnerFunction::getGCodeInput() {
     cout << "GCode terminal Starts" << endl << "Input MOUT to end terminal menu." << endl;
+    // Clear Buffer
+    cin.clear();
+    cin.ignore(INT_MAX, '\n');
+    
     while (true) {
         getline(cin, test);
         pos = test.find(" ");

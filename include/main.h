@@ -18,6 +18,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <stdlib.h>
+#include <climits>
 
 #define BCM2708_ST_BASE 0x3F003000 /* BCM 2835 System Timer */
 
