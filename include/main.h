@@ -3,6 +3,15 @@
 #include <wiringPi.h>
 #include <time.h>
 #include <unistd.h>
+#include <cstring>
+#include <thread>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <stdlib.h>
+#include <climits>
+
 #include "PinClass.h"
 #include "pins.h"
 #include "EndstopClass.h"
@@ -12,14 +21,6 @@
 #include "AxisControlClass.h"
 #include "timer.h"
 #include "coord.h"
-#include <cstring>
-#include <thread>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <stdlib.h>
-#include <climits>
 
 #define BCM2708_ST_BASE 0x3F003000 /* BCM 2835 System Timer */
 
