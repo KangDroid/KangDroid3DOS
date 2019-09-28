@@ -1,4 +1,5 @@
 #include "main.h"
+#include "global.h"
 
 MotorControlClass::MotorControlClass(int step, int dir, int enable) : PinClass(step, dir) {
     pinMode(enable, OUTPUT);
@@ -28,9 +29,9 @@ void MotorControlClass::disableStepper() {
     if (digitalRead(this->enable) == HIGH) {
         digitalWrite(this->enable, LOW);
     }
-    coord.setX(-1);
-    coord.setY(-1);
-    coord.setZ(-1);
+    coord->setX(-1);
+    coord->setY(-1);
+    coord->setZ(-1);
     usleep(500000);
 }
 

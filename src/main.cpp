@@ -1,4 +1,8 @@
 #include "main.h"
+#include "global.h"
+
+// Initiate
+Coord *coord = new Coord();
 
 int main(void) {
     int menu_val;

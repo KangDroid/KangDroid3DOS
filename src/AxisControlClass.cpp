@@ -2,6 +2,7 @@
  *  Calculate length and move the device
  */
 #include "main.h"
+#include "global.h"
 
 void AxisControlClass::moveTestX(int speed, int steps) {
     for (int step_x = 0; step_x < steps; step_x++) {
@@ -65,10 +66,12 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
 
 void AxisControlClass::calculateMovements(int target_x, int target_y, int* stp_x, int* stp_y) {
     // Calculate dx, dy
-    int dx = 0 - target_x;
-    cout << "DX: " << dx << endl;
-    int dy = 0 - target_y;
-    cout << "DY: " << dy << endl;
+    if (coord == NULL)
+        cout <<"NULL!" << endl;
+    int dx = coord->retX() - target_x;
+    cout << "DX: " << coord->retX() << endl;
+    int dy = coord->retY() - target_y;
+    cout << "DY: " << coord->retX() << endl;
 
     // Calculate STP
     *stp_x = STEPS_PER_MM::X * (dx + dy);
@@ -81,8 +84,8 @@ void AxisControlClass::moveZ(int length, int speed) {
     z_motor.rotateMotor(length * STEPS_PER_MM::Z, SPEED_MOTOR::SPEED_LOW);
     ed_time = time(NULL);
     cout << "TIME: " << ed_time - st_time << endl;
-    if (coord.retZ() != -1) {
-        coord.setZ(length);
+    if (coord->retZ() != -1) {
+        coord->setZ(length);
     }
 }
 void AxisControlClass::moveE(int length, int speed) {
