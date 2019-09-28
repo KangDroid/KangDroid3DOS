@@ -1,4 +1,5 @@
 #include "main.h"
+#include "global.h"
 
 void GCodeWrapper::G28() {
     InnerFunction::autoHomeSimulation();
@@ -6,12 +7,12 @@ void GCodeWrapper::G28() {
 }
 
 void GCodeWrapper::M119() {
-    es.currentStatus();
+    es->currentStatus();
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
 void GCodeWrapper::M18() {
-    z_motor.disableStepper();
+    z_motor->disableStepper();
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
@@ -28,7 +29,7 @@ void GCodeWrapper::G1(int feedrate, int x, int y, int z) {
         AxisControlClass::moveTest(x, y);
     }
     if (z) {
-        axis.moveZ(z, feedrate);
+        axis->moveZ(z, feedrate);
     }
     //z_motor.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);

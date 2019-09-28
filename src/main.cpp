@@ -3,19 +3,25 @@
 
 // Initiate
 Coord *coord = new Coord();
+EndstopClass *es = new EndstopClass(ES_X, ES_Y, ES_Z, PUD_UP);
+MotorControlClass *z_motor = new MotorControlClass(-1, -1, MOTOR_OFF);
+MotorControlClass *x_motor = new MotorControlClass(MOTOR_X_STEP, MOTOR_X_DIR, MOTOR_OFF);
+MotorControlClass *y_motor = new MotorControlClass(MOTOR_Y_STEP, MOTOR_Y_DIR, MOTOR_OFF);
+MotorControlClass *e_motor = new MotorControlClass(-1, -1, MOTOR_OFF);
+AxisControlClass *axis = new AxisControlClass(1);
 
 int main(void) {
     int menu_val;
     // Implementation
     wiringPiSetup();
-    es.initPin();
+    es->initPin();
 
     do {
         menu_val = showMenu();
         switch(menu_val) {
             case 1:
                 clearScreen();
-                es.currentStatus();
+                es->currentStatus();
             break;
             case 2:
                 clearScreen();
@@ -30,7 +36,19 @@ int main(void) {
             break;
         }
     } while(menu_val != 0);
+
+    clearMemory();
     return 0;
+}
+
+void clearMemory() {
+    delete coord;
+    delete es;
+    delete z_motor;
+    delete x_motor;
+    delete y_motor;
+    delete e_motor;
+    delete axis;
 }
 
 int showMenu() {

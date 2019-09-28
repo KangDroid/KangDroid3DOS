@@ -13,11 +13,11 @@ void InnerFunction::autoHomeSimulation() {
 
     // Home X
     start_time = time(NULL);
-    x_motor.enableStepper();
+    x_motor->enableStepper();
 
     /*X/Y Motor direction changes because it is corexy*/
-    digitalWrite(y_motor.retDir(), LOW);
-    digitalWrite(x_motor.retDir(), HIGH);
+    digitalWrite(y_motor->retDir(), LOW);
+    digitalWrite(x_motor->retDir(), HIGH);
     //TODO: Surround those digitalWrite with function or somehow implement it --> Beautify
 
     while (!(digitalRead(ES_X) == false)) {
@@ -26,7 +26,7 @@ void InnerFunction::autoHomeSimulation() {
             // Failed
             sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            axis.moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
+            axis->moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
         }
     }
     coord->setX(0);
@@ -35,8 +35,8 @@ void InnerFunction::autoHomeSimulation() {
     start_time = time(NULL);
 
     /*X/Y Motor direction changes because it is corexy*/
-    digitalWrite(y_motor.retDir(), LOW);
-    digitalWrite(x_motor.retDir(), LOW);
+    digitalWrite(y_motor->retDir(), LOW);
+    digitalWrite(x_motor->retDir(), LOW);
     //TODO: Surround those digitalWrite with function or somehow implement it --> Beautify
 
     while (!(digitalRead(ES_Y) == false)) {
@@ -45,7 +45,7 @@ void InnerFunction::autoHomeSimulation() {
             // Failed
             sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            axis.moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
+            axis->moveAxisInf(SPEED_MOTOR::SPEED_MID); // Only for COREXY Devices
         }
     }
     coord->setY(0);
