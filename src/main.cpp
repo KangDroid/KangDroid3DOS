@@ -12,6 +12,18 @@ AxisControlClass *axis = new AxisControlClass(1);
 
 int main(void) {
     int menu_val;
+    /**
+     * Basically, we need to check whether this program
+     * is running on ROOT or not.
+     * We are using direct-HW based Clock.
+     */
+    if (geteuid() != 0) {
+        cout << "You are running this program as non-root." << endl;
+        cout << "This program needs root prior to use HW Based clock." << endl;
+        cout << "Abort." << endl;
+        return 0;
+    }
+
     // Implementation
     wiringPiSetup();
     es->initPin();
