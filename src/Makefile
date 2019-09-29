@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-Wall -Wno-unused-variable -O3 -lwiringPi -lpthread -I../include
+CXXFLAGS=-Wall -Wno-unused-variable -O3 -g -lwiringPi -lpthread -I../include
 TARGET=app.out
 OBJS=coord.o\
 	timer.o\

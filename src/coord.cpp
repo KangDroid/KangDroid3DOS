@@ -5,22 +5,22 @@ Coord::Coord() {
     this->coord_y = -1;
     this->coord_z = -1;
 }
-void Coord::setX(int x) {
+void Coord::setX(float x) {
     this->coord_x = x;
 }
-void Coord::setY(int y) {
+void Coord::setY(float y) {
     this->coord_y = y;
 }
-void Coord::setZ(int z) {
+void Coord::setZ(float z) {
     this->coord_z = z;
 }
 
-int Coord::retX() {
+float Coord::retX() {
     return this->coord_x;
 }
-int Coord::retY() {
+float Coord::retY() {
     return this->coord_y;
 }
-int Coord::retZ() {
+float Coord::retZ() {
     return this->coord_z;
 }

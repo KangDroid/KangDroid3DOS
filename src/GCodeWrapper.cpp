@@ -16,7 +16,7 @@ void GCodeWrapper::M18() {
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
-void GCodeWrapper::G1(int feedrate, int x, int y, int z) {
+void GCodeWrapper::G1(float feedrate, float x, float y, float z) {
     if (feedrate >= 0 && feedrate <= 500) {
         feedrate = SPEED_MOTOR::SPEED_LOW;
     } else if (feedrate > 500 && feedrate <= 1000) {

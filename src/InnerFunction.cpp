@@ -96,22 +96,22 @@ void InnerFunction::getGCodeInput() {
             coord->setY(0);
             coord->setZ(0);
         } else if (first_bits == "G1") {
-            int speed = 0, xmm = 0, ymm = 0, zmm = 0;
+            float speed = 0, xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
                 first_bits = first_bits.substr(1, test.find(" "));
-                speed = stoi(first_bits);
+                speed = stof(first_bits);
             }
             if (seen('X')) {
                 first_bits = first_bits.substr(1, test.find(" "));
-                xmm = stoi(first_bits);
+                xmm = stof(first_bits);
             }
             if (seen('Y')) {
                 first_bits = first_bits.substr(1, test.find(" "));
-                ymm = stoi(first_bits);
+                ymm = stof(first_bits);
             }
             if (seen('Z')) {
                 first_bits = first_bits.substr(1, test.find(" "));
-                zmm = stoi(first_bits);
+                zmm = stof(first_bits);
             }
             GCodeWrapper::G1(speed, xmm, ymm, zmm);
         } else if (first_bits == "MOUT") {

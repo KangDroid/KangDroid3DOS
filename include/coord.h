@@ -1,15 +1,15 @@
 class Coord {
     private:
-        int coord_x;
-        int coord_y;
-        int coord_z;
+        float coord_x;
+        float coord_y;
+        float coord_z;
 
     public:
         Coord();
-        void setX(int x);
-        void setY(int y);
-        void setZ(int z);
-        int retX();
-        int retY();
-        int retZ();
+        void setX(float x);
+        void setY(float y);
+        void setZ(float z);
+        float retX();
+        float retY();
+        float retZ();
 };

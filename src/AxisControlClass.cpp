@@ -7,22 +7,22 @@
 void AxisControlClass::moveTestX(int speed, int steps) {
     for (int step_x = 0; step_x < steps; step_x++) {
         digitalWrite(x_motor->retStep(), HIGH);
-        Timer::sleep_kangdroid(20800/speed);
+        Timer::sleep_kangdroid(speed);
         digitalWrite(x_motor->retStep(), LOW);
-        Timer::sleep_kangdroid(20800/speed);
+        Timer::sleep_kangdroid(speed);
     }
 }
 
 void AxisControlClass::moveTestY(int speed, int steps) {
     for (int step_y = 0; step_y < steps; step_y++) {
         digitalWrite(y_motor->retStep(), HIGH);
-        Timer::sleep_kangdroid(20800/speed);
+        Timer::sleep_kangdroid(speed);
         digitalWrite(y_motor->retStep(), LOW);
-        Timer::sleep_kangdroid(20800/speed);
+        Timer::sleep_kangdroid(speed);
     } 
 }
 
-void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
+void AxisControlClass::moveTest(float target_xcoord, float target_ycoord) {
     /**
      * 1. Get current cooord
      * 2. Get Target Coord
@@ -31,10 +31,10 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
      * 5. Move it
      */
     int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1, mul;
-    int spd_x = 32, spd_y = 32;
+    int spd_x = 20800/32, spd_y = 20800/32;
 
     calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
-    cout << "STP_X: " << stp_x << endl;
+    cout << "STP_X: " << spd_x << endl;
     cout << "STP_Y: " << stp_y << endl;
 
     // Default to high
@@ -49,6 +49,7 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
     if(stp_x != 0 && stp_y != 0) {
         if (stp_x > stp_y) {
             mul = stp_x/stp_y;
+            cout << "MUL: " << mul << endl;
             spd_y = spd_x / mul;
         } else if (stp_x < stp_y) {
             mul = stp_y/stp_x;
@@ -71,6 +72,9 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
         coord->setY(coord->retY() + target_ycoord);
     }*/
 
+    cout << "SPD_X: " << spd_x << endl;
+    cout << "SPD_Y: " << spd_y << endl;
+
     // Initiate HW Clock and start thread.
     Timer::TIMER_Init();
     thread tx(moveTestX, spd_x, stp_x);
@@ -82,10 +86,13 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
     ty.join();
 }
 
-void AxisControlClass::calculateMovements(int target_x, int target_y, int* stp_x, int* stp_y) {
+void AxisControlClass::calculateMovements(float target_x, float target_y, int* stp_x, int* stp_y) {
     // Calculate dx, dy
-    int dx = coord->retX() - target_x;
-    int dy = coord->retY() - target_y;
+    float dx = coord->retX() - target_x;
+    float dy = coord->retY() - target_y;
+
+    cout << "DX: " << (float)dx << endl;
+    cout << "DY: " << dy << endl;
 
     // Calculate STP
     *stp_x = STEPS_PER_MM::X * (dx + dy);
