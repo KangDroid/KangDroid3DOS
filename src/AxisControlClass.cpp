@@ -22,7 +22,30 @@ void AxisControlClass::moveTestY(int speed, int steps) {
     } 
 }
 
-void AxisControlClass::moveTest(float target_xcoord, float target_ycoord) {
+int AxisControlClass::roundUP(float input) {
+    if ((input - (int)input) < 0.5) {
+        return (int)input;
+    } else {
+        return (int)(input + 0.5);
+    }
+}
+
+void AxisControlClass::calculateSpeed(int &speed_x, int &speed_y, const int &fr, int &target_feedrate) {
+    float spd_tmpx;
+    if (target_feedrate > fr) {
+        spd_tmpx = ((float)target_feedrate / fr);
+        spd_tmpx = (speed_x / spd_tmpx);
+        speed_x = roundUP(spd_tmpx);
+        speed_y = roundUP(spd_tmpx);
+    } else {
+        spd_tmpx = (fr / (float)target_feedrate);
+        spd_tmpx = (speed_x * spd_tmpx);
+        speed_x = roundUP(spd_tmpx);
+        speed_y = roundUP(spd_tmpx);
+    }
+}
+
+void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int target_fr) {
     /**
      * 1. Get current cooord
      * 2. Get Target Coord
@@ -31,8 +54,10 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord) {
      * 5. Move it
      */
     int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1, mul;
-    int spd_x = 20800/32, spd_y = 20800/32;
-
+    int spd_x = 650, spd_y = 650;
+    const int fr = 923;
+    calculateSpeed(spd_x, spd_y, fr, target_fr);
+    
     calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
     //cout << "STP_X: " << spd_x << endl;
     //cout << "STP_Y: " << stp_y << endl;
@@ -77,6 +102,7 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord) {
 
     // Initiate HW Clock and start thread.
     Timer::TIMER_Init();
+    unsigned int st_time = Timer::TIMER_GetSysTick();
     thread tx(moveTestX, spd_x, stp_x);
     thread ty(moveTestY, spd_y, stp_y);
     /**
@@ -84,6 +110,8 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord) {
      */
     tx.join();
     ty.join();
+    unsigned int ed_time = Timer::TIMER_GetSysTick();
+    cout << "Moved 10mm took " << ed_time - st_time << endl;
 }
 
 void AxisControlClass::calculateMovements(float target_x, float target_y, int* stp_x, int* stp_y) {
