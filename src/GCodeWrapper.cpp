@@ -25,9 +25,8 @@ void GCodeWrapper::G1(int feedrate, int x, int y, int z) {
         feedrate = SPEED_MOTOR::SPEED_HIGH;
     }
 
-    if (x || y) {
-        AxisControlClass::moveTest(x, y);
-    }
+    AxisControlClass::moveTest(x, y);
+    
     if (z) {
         axis->moveZ(z, feedrate);
     }

@@ -44,7 +44,6 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
     stp_x = (stp_x < 0) ? -stp_x : stp_x;
     cout << digitalRead(y_motor->retDir()) << endl;
     cout << digitalRead(x_motor->retDir()) << endl;
-    
 
     // Calculate speed
     if(stp_x != 0 && stp_y != 0) {
@@ -57,8 +56,20 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
         }
     }
 
-    coord->setX(coord->retX() + target_xcoord);
-    coord->setY(coord->retY() + target_ycoord);
+    coord->setX(target_xcoord);
+    coord->setY(target_ycoord);
+
+    /*if (coord->retX() - target_xcoord >= 0) {
+        coord->setX(coord->retX() - target_xcoord);
+    } else {
+        coord->setX(coord->retX() + target_xcoord);
+    }
+
+    if (coord->retY() - target_ycoord >= 0) {
+        coord->setY(coord->retY()- target_ycoord);
+    } else {
+        coord->setY(coord->retY() + target_ycoord);
+    }*/
 
     // Initiate HW Clock and start thread.
     Timer::TIMER_Init();
