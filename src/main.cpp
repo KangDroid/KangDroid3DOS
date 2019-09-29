@@ -44,7 +44,8 @@ int main(void) {
                 InnerFunction::getGCodeInput();
             break;
             case 4:
-                AxisControlClass::moveTest(10, 0);
+                digitalWrite(y_motor->retDir(), HIGH);
+                digitalWrite(x_motor->retDir(), HIGH);
             break;
         }
     } while(menu_val != 0);

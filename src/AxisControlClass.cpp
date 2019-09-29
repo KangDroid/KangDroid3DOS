@@ -39,9 +39,12 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
 
     // Default to high
     digitalWrite(y_motor->retDir(), (stp_y >= 0) ? HIGH:LOW);
-    stp_x = (stp_x < 0) ? -stp_x : stp_x;
-    digitalWrite(x_motor->retDir(), (stp_x >= 0) ? HIGH:LOW);
     stp_y = (stp_y < 0) ? -stp_y : stp_y;
+    digitalWrite(x_motor->retDir(), (stp_x >= 0) ? HIGH:LOW);
+    stp_x = (stp_x < 0) ? -stp_x : stp_x;
+    cout << digitalRead(y_motor->retDir()) << endl;
+    cout << digitalRead(x_motor->retDir()) << endl;
+    
 
     // Calculate speed
     if (stp_x > stp_y) {
