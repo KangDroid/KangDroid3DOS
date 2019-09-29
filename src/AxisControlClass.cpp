@@ -110,13 +110,13 @@ void AxisControlClass::moveE(int length, int speed) {
  */
 void AxisControlClass::moveAxisInf(int speed) {
     digitalWrite(y_motor->retStep(), HIGH);
-    usleep(20800/speed);
+    Timer::sleep_kangdroid(20800/speed);
     digitalWrite(y_motor->retStep(), LOW);
 
     digitalWrite(x_motor->retStep(), HIGH);
-    usleep(20800/speed);
+    Timer::sleep_kangdroid(20800/speed);
     digitalWrite(x_motor->retStep(), LOW);
-    usleep(20800/speed);
+    Timer::sleep_kangdroid(20800/speed);
 }
 
 AxisControlClass::AxisControlClass(int isCore) {
