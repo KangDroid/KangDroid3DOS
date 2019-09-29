@@ -93,7 +93,8 @@ void InnerFunction::FileTest() {
             coord->setY(0);
             coord->setZ(0);
         } else if (first_bits == "G1" || first_bits == "G0") {
-            float speed = 0, xmm = 0, ymm = 0, zmm = 0;
+            static float speed = 0;
+            float xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
                 first_bits = first_bits.substr(1, test.find(" "));
                 speed = stof(first_bits);
@@ -150,7 +151,8 @@ void InnerFunction::getGCodeInput() {
             coord->setY(0);
             coord->setZ(0);
         } else if (first_bits == "G1" || first_bits == "G0") {
-            float speed = 0, xmm = 0, ymm = 0, zmm = 0;
+            static float speed = 0;
+            float xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
                 first_bits = first_bits.substr(1, test.find(" "));
                 speed = stof(first_bits);
@@ -167,6 +169,7 @@ void InnerFunction::getGCodeInput() {
                 first_bits = first_bits.substr(1, test.find(" "));
                 zmm = stof(first_bits);
             }
+            cout << "SPEED: " << speed << endl;
             GCodeWrapper::G1(speed, xmm, ymm, zmm);
         } else if (first_bits == "MOUT") {
             break;
