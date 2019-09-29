@@ -95,7 +95,7 @@ void InnerFunction::getGCodeInput() {
             coord->setX(0);
             coord->setY(0);
             coord->setZ(0);
-        } else if (first_bits == "G1") {
+        } else if (first_bits == "G1" || first_bits == "G0") {
             float speed = 0, xmm = 0, ymm = 0, zmm = 0;
             if (seen('F')) {
                 first_bits = first_bits.substr(1, test.find(" "));
