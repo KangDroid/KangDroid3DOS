@@ -44,8 +44,7 @@ int main(void) {
                 InnerFunction::getGCodeInput();
             break;
             case 4:
-                digitalWrite(y_motor->retDir(), HIGH);
-                digitalWrite(x_motor->retDir(), HIGH);
+                InnerFunction::FileTest();
             break;
         }
     } while(menu_val != 0);

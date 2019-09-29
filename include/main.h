@@ -11,6 +11,7 @@
 #include <sys/mman.h>
 #include <stdlib.h>
 #include <climits>
+#include <fstream>
 
 #include "PinClass.h"
 #include "pins.h"

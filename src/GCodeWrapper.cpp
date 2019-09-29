@@ -24,8 +24,9 @@ void GCodeWrapper::G1(float feedrate, float x, float y, float z) {
     } else if (feedrate > 1000 && feedrate <= 5000) {
         feedrate = SPEED_MOTOR::SPEED_HIGH;
     }
-
-    AxisControlClass::moveTest(x, y);
+    if (x || y) {
+        AxisControlClass::moveTest(x, y);
+    }
     
     if (z) {
         axis->moveZ(z, feedrate);

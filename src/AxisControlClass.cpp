@@ -34,22 +34,22 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord) {
     int spd_x = 20800/32, spd_y = 20800/32;
 
     calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
-    cout << "STP_X: " << spd_x << endl;
-    cout << "STP_Y: " << stp_y << endl;
+    //cout << "STP_X: " << spd_x << endl;
+    //cout << "STP_Y: " << stp_y << endl;
 
     // Default to high
     digitalWrite(y_motor->retDir(), (stp_y >= 0) ? HIGH:LOW);
     stp_y = (stp_y < 0) ? -stp_y : stp_y;
     digitalWrite(x_motor->retDir(), (stp_x >= 0) ? HIGH:LOW);
     stp_x = (stp_x < 0) ? -stp_x : stp_x;
-    cout << digitalRead(y_motor->retDir()) << endl;
-    cout << digitalRead(x_motor->retDir()) << endl;
+    //cout << digitalRead(y_motor->retDir()) << endl;
+    //cout << digitalRead(x_motor->retDir()) << endl;
 
     // Calculate speed
     if(stp_x != 0 && stp_y != 0) {
         if (stp_x > stp_y) {
             mul = stp_x/stp_y;
-            cout << "MUL: " << mul << endl;
+            //cout << "MUL: " << mul << endl;
             spd_y = spd_x / mul;
         } else if (stp_x < stp_y) {
             mul = stp_y/stp_x;
@@ -72,8 +72,8 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord) {
         coord->setY(coord->retY() + target_ycoord);
     }*/
 
-    cout << "SPD_X: " << spd_x << endl;
-    cout << "SPD_Y: " << spd_y << endl;
+    //cout << "SPD_X: " << spd_x << endl;
+    //cout << "SPD_Y: " << spd_y << endl;
 
     // Initiate HW Clock and start thread.
     Timer::TIMER_Init();
@@ -91,8 +91,8 @@ void AxisControlClass::calculateMovements(float target_x, float target_y, int* s
     float dx = coord->retX() - target_x;
     float dy = coord->retY() - target_y;
 
-    cout << "DX: " << (float)dx << endl;
-    cout << "DY: " << dy << endl;
+    //cout << "DX: " << (float)dx << endl;
+    //cout << "DY: " << dy << endl;
 
     // Calculate STP
     *stp_x = STEPS_PER_MM::X * (dx + dy);

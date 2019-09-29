@@ -5,4 +5,5 @@ class InnerFunction {
         static void moveAxis();
         static bool seen(char a);
         static void showInfoAxis();
+        static void FileTest();
 };

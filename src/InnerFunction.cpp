@@ -65,6 +65,60 @@ void InnerFunction::autoHomeSimulation() {
     coord.setZ(0);; */
 }
 
+void InnerFunction::FileTest() {
+    ifstream file("/home/pi/C_xyzCalibration_cube.gcode");
+    do {
+        getline(file, test);
+        cout << test << endl;
+        pos = test.find(" ");
+        // First parse value
+        if (pos != -1) {
+            first_bits = test.substr(0, pos); // The rest of them stored in test
+            test.erase(0, pos + 1);
+        } else {
+            // Use test value
+            first_bits.assign(test);
+        }
+
+        if (first_bits == "M119") {
+            GCodeWrapper::M119();
+        } else if (first_bits == "G28") {
+            GCodeWrapper::G28();
+        } else if (first_bits == "M18") {
+            GCodeWrapper::M18();
+        } else if (first_bits == "M114") {
+            GCodeWrapper::M114();
+        } else if (first_bits == "HOME") {
+            coord->setX(0);
+            coord->setY(0);
+            coord->setZ(0);
+        } else if (first_bits == "G1" || first_bits == "G0") {
+            float speed = 0, xmm = 0, ymm = 0, zmm = 0;
+            if (seen('F')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                speed = stof(first_bits);
+            }
+            if (seen('X')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                xmm = stof(first_bits);
+            }
+            if (seen('Y')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                ymm = stof(first_bits);
+            }
+            if (seen('Z')) {
+                first_bits = first_bits.substr(1, test.find(" "));
+                zmm = stof(first_bits);
+            }
+            GCodeWrapper::G1(speed, xmm, ymm, zmm);
+        } else if (first_bits == "MOUT") {
+            break;
+        } else {
+            cout << "Unknown Command: \"" << test << "\"" << endl;
+        }
+    } while (!file.eof());
+}
+
 void InnerFunction::getGCodeInput() {
     cout << "GCode terminal Starts" << endl << "Input MOUT to end terminal menu." << endl;
     // Clear Buffer
