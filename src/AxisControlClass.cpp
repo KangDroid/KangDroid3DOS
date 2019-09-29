@@ -57,11 +57,13 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
         }
     }
 
+    coord->setX(coord->retX() + target_xcoord);
+    coord->setY(coord->retY() + target_ycoord);
+
     // Initiate HW Clock and start thread.
     Timer::TIMER_Init();
     thread tx(moveTestX, spd_x, stp_x);
     thread ty(moveTestY, spd_y, stp_y);
-
     /**
      * Use join or detach.
      */
