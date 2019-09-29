@@ -47,12 +47,14 @@ void AxisControlClass::moveTest(int target_xcoord, int target_ycoord) {
     
 
     // Calculate speed
-    if (stp_x > stp_y) {
-        mul = stp_x/stp_y;
-        spd_y = spd_x / mul;
-    } else {
-        mul = stp_y/stp_x;
-        spd_x = spd_y / mul;
+    if(stp_x != 0 && stp_y != 0) {
+        if (stp_x > stp_y) {
+            mul = stp_x/stp_y;
+            spd_y = spd_x / mul;
+        } else if (stp_x < stp_y) {
+            mul = stp_y/stp_x;
+            spd_x = spd_y / mul;
+        }
     }
 
     // Initiate HW Clock and start thread.
