@@ -11,7 +11,7 @@ void AxisControlClass::moveTestX(int speed, int steps) {
         digitalWrite(x_motor->retStep(), LOW);
         Timer::sleep_kangdroid(speed);
     }
-    cout << "Finished X\nXSteps: " << steps << "\nXSpeed: " << speed << endl;
+    //cout << "Finished X\nXSteps: " << steps << "\nXSpeed: " << speed << endl;
 }
 
 void AxisControlClass::moveTestY(int speed, int steps) {
@@ -21,7 +21,7 @@ void AxisControlClass::moveTestY(int speed, int steps) {
         digitalWrite(y_motor->retStep(), LOW);
         Timer::sleep_kangdroid(speed);
     } 
-    cout << "Finished Y\nYSteps: " << steps << "\nYSpeed: " << speed << endl;
+    //cout << "Finished Y\nYSteps: " << steps << "\nYSpeed: " << speed << endl;
 }
 
 int AxisControlClass::roundUP(float input) {
