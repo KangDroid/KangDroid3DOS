@@ -54,13 +54,14 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
      * 5. Move it
      */
     int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1, mul;
-    int spd_x = 650, spd_y = 650;
-    const int fr = 923;
+    int spd_x = 10000, spd_y = 10000;
+    const int fr = 60;
+    const int fr_limit = 100;
+    const int jerk_limit = 2000;
     if (target_fr > 800) {
-        target_fr = 800; // Maximum accleration when gcode inputs.
+        target_fr = 800;
     }
     calculateSpeed(spd_x, spd_y, fr, target_fr);
-    
     calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
 
     // Default to high
@@ -73,11 +74,58 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
     if(stp_x != 0 && stp_y != 0) {
         if (stp_x > stp_y) {
             mul = stp_x/stp_y;
-            //cout << "MUL: " << mul << endl;
             spd_x = spd_y / mul;
         } else if (stp_x < stp_y) {
             mul = stp_y/stp_x;
             spd_y = spd_x / mul;
+        }
+    }
+
+    /**
+     * Limit PWM Rate to fr_limit(100us) when moving normal linear movement
+     * Limit PWM Rate to jerk_limit(2000us) when moving normal linear movement
+     * TODO: Optimize those nasty-lazy code.
+     */
+    if (stp_x < 50 && stp_y < 50) {
+        if (stp_x > stp_y) { // x has to be fast, y has to be slow.
+            int tmp_mul = stp_x/stp_y;
+            spd_x = jerk_limit;
+            spd_y = jerk_limit * mul;
+        } else if (stp_x < stp_y) {
+            int tmp_mul = stp_y/stp_x;
+            spd_y = jerk_limit;
+            spd_x = jerk_limit * mul;
+        } else {
+            spd_y = jerk_limit;
+            spd_x = jerk_limit;
+        }
+    } else {
+        if (spd_x < fr_limit || spd_y < fr_limit) {
+            if (spd_x < fr_limit && spd_y < fr_limit) {
+                if (spd_x == spd_y) {
+                    spd_x = fr_limit;
+                    spd_y = fr_limit;
+                } else {
+                    // Get Multiplier
+                    if (stp_x > stp_y) { // x has to be fast, y has to be slow.
+                        int tmp_mul = stp_x/stp_y;
+                        spd_x = fr_limit;
+                        spd_y = fr_limit * mul;
+                    } else {
+                        int tmp_mul = stp_y/stp_x;
+                        spd_y = fr_limit;
+                        spd_x = fr_limit * mul;
+                    }
+                }
+            } else if (spd_x < fr_limit) {
+                int tmp = fr_limit - spd_x;
+                spd_x += tmp; // make spd_x as 750;
+                spd_y = spd_x * mul;
+            } else if (spd_y < fr_limit) {
+                int tmp = fr_limit - spd_y;
+                spd_y += tmp; // make spd_x as fr_limit;
+                spd_x = spd_y * mul;      
+            }
         }
     }
 
@@ -96,7 +144,7 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
     tx.join();
     ty.join();
     unsigned int ed_time = Timer::TIMER_GetSysTick();
-    cout << "Moved 10mm took " << ed_time - st_time << endl;
+    cout << "Execution of GCode took: " << ed_time - st_time << endl;
 }
 
 void AxisControlClass::calculateMovements(float target_x, float target_y, int* stp_x, int* stp_y) {
