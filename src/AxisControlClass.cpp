@@ -77,10 +77,10 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
         if (stp_x > stp_y) {
             mul = stp_x/stp_y;
             //cout << "MUL: " << mul << endl;
-            spd_y = spd_x / mul;
+            spd_x = spd_y / mul;
         } else if (stp_x < stp_y) {
             mul = stp_y/stp_x;
-            spd_x = spd_y / mul;
+            spd_y = spd_x / mul;
         }
     }
 
