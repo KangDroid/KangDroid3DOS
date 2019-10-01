@@ -66,7 +66,7 @@ void InnerFunction::autoHomeSimulation() {
 }
 
 void InnerFunction::FileTest() {
-    ifstream file("/home/pi/C_xyzCalibration_cube.gcode");
+    ifstream file("/home/pi/project/C_xyzCalibration_cube.gcode");
     do {
         getline(file, test);
         cout << test << endl;
