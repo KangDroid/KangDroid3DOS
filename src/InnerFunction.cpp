@@ -70,6 +70,10 @@ void InnerFunction::FileTest() {
     do {
         getline(file, test);
         cout << test << endl;
+        if (test.at(0) == ';') {
+            // Skip immediately
+            continue;
+        }
         pos = test.find(" ");
         // First parse value
         if (pos != -1) {
