@@ -56,6 +56,9 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
     int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1, mul;
     int spd_x = 650, spd_y = 650;
     const int fr = 923;
+    if (target_fr > 800) {
+        target_fr = 800; // Maximum accleration when gcode inputs.
+    }
     calculateSpeed(spd_x, spd_y, fr, target_fr);
     
     calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
