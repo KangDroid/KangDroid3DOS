@@ -17,13 +17,6 @@ void GCodeWrapper::M18() {
 }
 
 void GCodeWrapper::G1(float feedrate, float x, float y, float z) {
-    /*if (feedrate >= 0 && feedrate <= 500) {
-        feedrate = SPEED_MOTOR::SPEED_LOW;
-    } else if (feedrate > 500 && feedrate <= 1000) {
-        feedrate = SPEED_MOTOR::SPEED_MID;
-    } else if (feedrate > 1000 && feedrate <= 5000) {
-        feedrate = SPEED_MOTOR::SPEED_HIGH;
-    }*/
     if (x || y) {
         AxisControlClass::moveTest(x, y, (int)feedrate);
     }

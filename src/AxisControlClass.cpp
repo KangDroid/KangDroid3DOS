@@ -11,7 +11,6 @@ void AxisControlClass::moveTestX(int speed, int steps) {
         digitalWrite(x_motor->retStep(), LOW);
         Timer::sleep_kangdroid(speed);
     }
-    //cout << "Finished X\nXSteps: " << steps << "\nXSpeed: " << speed << endl;
 }
 
 void AxisControlClass::moveTestY(int speed, int steps) {
@@ -21,7 +20,6 @@ void AxisControlClass::moveTestY(int speed, int steps) {
         digitalWrite(y_motor->retStep(), LOW);
         Timer::sleep_kangdroid(speed);
     } 
-    //cout << "Finished Y\nYSteps: " << steps << "\nYSpeed: " << speed << endl;
 }
 
 int AxisControlClass::roundUP(float input) {
@@ -61,16 +59,12 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
     calculateSpeed(spd_x, spd_y, fr, target_fr);
     
     calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
-    //cout << "STP_X: " << spd_x << endl;
-    //cout << "STP_Y: " << stp_y << endl;
 
     // Default to high
     digitalWrite(y_motor->retDir(), (stp_y >= 0) ? HIGH:LOW);
     stp_y = (stp_y < 0) ? -stp_y : stp_y;
     digitalWrite(x_motor->retDir(), (stp_x >= 0) ? HIGH:LOW);
     stp_x = (stp_x < 0) ? -stp_x : stp_x;
-    //cout << digitalRead(y_motor->retDir()) << endl;
-    //cout << digitalRead(x_motor->retDir()) << endl;
 
     // Calculate speed
     if(stp_x != 0 && stp_y != 0) {
@@ -87,26 +81,12 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
     coord->setX(target_xcoord);
     coord->setY(target_ycoord);
 
-    /*if (coord->retX() - target_xcoord >= 0) {
-        coord->setX(coord->retX() - target_xcoord);
-    } else {
-        coord->setX(coord->retX() + target_xcoord);
-    }
-
-    if (coord->retY() - target_ycoord >= 0) {
-        coord->setY(coord->retY()- target_ycoord);
-    } else {
-        coord->setY(coord->retY() + target_ycoord);
-    }*/
-
-    //cout << "SPD_X: " << spd_x << endl;
-    //cout << "SPD_Y: " << spd_y << endl;
-
     // Initiate HW Clock and start thread.
     Timer::TIMER_Init();
     unsigned int st_time = Timer::TIMER_GetSysTick();
     thread tx(moveTestX, spd_x, stp_x);
     thread ty(moveTestY, spd_y, stp_y);
+
     /**
      * Use join or detach.
      */
@@ -120,9 +100,6 @@ void AxisControlClass::calculateMovements(float target_x, float target_y, int* s
     // Calculate dx, dy
     float dx = coord->retX() - target_x;
     float dy = coord->retY() - target_y;
-
-    //cout << "DX: " << (float)dx << endl;
-    //cout << "DY: " << dy << endl;
 
     // Calculate STP
     *stp_x = STEPS_PER_MM::X * (dx + dy);
