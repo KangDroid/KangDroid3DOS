@@ -3,6 +3,7 @@
  */
 #include "main.h"
 #include "global.h"
+#include "speed.h"
 
 void AxisControlClass::moveTestX(int speed, int steps) {
     for (int step_x = 0; step_x < steps; step_x++) {
@@ -54,14 +55,12 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
      * 5. Move it
      */
     int stp_x = 0, stp_y = 0, steps_cur = 0, run = 1, mul;
-    int spd_x = 10000, spd_y = 10000;
-    const int fr = 60;
-    const int fr_limit = 100;
-    const int jerk_limit = 2000;
+    int spd_x = DEFAULT_MOTOR_SPEED;
+    int spd_y = DEFAULT_MOTOR_SPEED;
     if (target_fr > 800) {
         target_fr = 800;
     }
-    calculateSpeed(spd_x, spd_y, fr, target_fr);
+    calculateSpeed(spd_x, spd_y, MOTOR_SPEED_BASERATE, target_fr);
     calculateMovements(target_xcoord, target_ycoord, &stp_x, &stp_y);
 
     // Default to high
@@ -82,48 +81,48 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
     }
 
     /**
-     * Limit PWM Rate to fr_limit(100us) when moving normal linear movement
-     * Limit PWM Rate to jerk_limit(2000us) when moving normal linear movement
+     * Limit PWM Rate to MOTOR_SPEED_MAX_LIMIT(100us) when moving normal linear movement
+     * Limit PWM Rate to JERK_SPEED_LIMIT(2000us) when moving normal linear movement
      * TODO: Optimize those nasty-lazy code.
      */
     if (stp_x < 50 && stp_y < 50) {
         if (stp_x > stp_y) { // x has to be fast, y has to be slow.
             int tmp_mul = stp_x/stp_y;
-            spd_x = jerk_limit;
-            spd_y = jerk_limit * mul;
+            spd_x = JERK_SPEED_LIMIT;
+            spd_y = JERK_SPEED_LIMIT * mul;
         } else if (stp_x < stp_y) {
             int tmp_mul = stp_y/stp_x;
-            spd_y = jerk_limit;
-            spd_x = jerk_limit * mul;
+            spd_y = JERK_SPEED_LIMIT;
+            spd_x = JERK_SPEED_LIMIT * mul;
         } else {
-            spd_y = jerk_limit;
-            spd_x = jerk_limit;
+            spd_y = JERK_SPEED_LIMIT;
+            spd_x = JERK_SPEED_LIMIT;
         }
     } else {
-        if (spd_x < fr_limit || spd_y < fr_limit) {
-            if (spd_x < fr_limit && spd_y < fr_limit) {
+        if (spd_x < MOTOR_SPEED_MAX_LIMIT || spd_y < MOTOR_SPEED_MAX_LIMIT) {
+            if (spd_x < MOTOR_SPEED_MAX_LIMIT && spd_y < MOTOR_SPEED_MAX_LIMIT) {
                 if (spd_x == spd_y) {
-                    spd_x = fr_limit;
-                    spd_y = fr_limit;
+                    spd_x = MOTOR_SPEED_MAX_LIMIT;
+                    spd_y = MOTOR_SPEED_MAX_LIMIT;
                 } else {
                     // Get Multiplier
                     if (stp_x > stp_y) { // x has to be fast, y has to be slow.
                         int tmp_mul = stp_x/stp_y;
-                        spd_x = fr_limit;
-                        spd_y = fr_limit * mul;
+                        spd_x = MOTOR_SPEED_MAX_LIMIT;
+                        spd_y = MOTOR_SPEED_MAX_LIMIT * mul;
                     } else {
                         int tmp_mul = stp_y/stp_x;
-                        spd_y = fr_limit;
-                        spd_x = fr_limit * mul;
+                        spd_y = MOTOR_SPEED_MAX_LIMIT;
+                        spd_x = MOTOR_SPEED_MAX_LIMIT * mul;
                     }
                 }
-            } else if (spd_x < fr_limit) {
-                int tmp = fr_limit - spd_x;
+            } else if (spd_x < MOTOR_SPEED_MAX_LIMIT) {
+                int tmp = MOTOR_SPEED_MAX_LIMIT - spd_x;
                 spd_x += tmp; // make spd_x as 750;
                 spd_y = spd_x * mul;
-            } else if (spd_y < fr_limit) {
-                int tmp = fr_limit - spd_y;
-                spd_y += tmp; // make spd_x as fr_limit;
+            } else if (spd_y < MOTOR_SPEED_MAX_LIMIT) {
+                int tmp = MOTOR_SPEED_MAX_LIMIT - spd_y;
+                spd_y += tmp; // make spd_x as MOTOR_SPEED_MAX_LIMIT;
                 spd_x = spd_y * mul;      
             }
         }
