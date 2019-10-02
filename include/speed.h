@@ -15,4 +15,4 @@
  * more faster.
  */
 #define MOTOR_SPEED_MAX_LIMIT 100
-#define JERK_SPEED_LIMIT 2000
+#define JERK_SPEED_LIMIT 1000
