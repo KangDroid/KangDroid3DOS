@@ -15,5 +15,9 @@ void EndstopClass::currentStatus() {
 }
 
 EndstopClass::EndstopClass(int x, int y, int z, int pull_mode) : PinClass(x, y, z) {
+    this->x = x;
+    this->y = y;
+    this->z = z;
     this->pull_mode = pull_mode;
+    initPin();
 }
