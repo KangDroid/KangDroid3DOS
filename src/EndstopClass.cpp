@@ -10,7 +10,7 @@ void EndstopClass::currentStatus() {
     cout << "Current PIN Status:" << endl;
     cout << "X: " << ((digitalRead(this->x) == false) ? ": PROBED" : ": UNPROBED") << endl;
     cout << "Y: " << ((digitalRead(this->y) == false) ? ": PROBED" : ": UNPROBED") << endl;
-    cout << "Z: " << ((digitalRead(this->z) == false) ? ": PROBED" : ": UNPROBED") << endl;
+    cout << "Z: " << ((digitalRead(this->z) == true) ? ": PROBED" : ": UNPROBED") << endl;
     cout << endl << endl;
 }
 
