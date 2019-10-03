@@ -5,6 +5,22 @@
 #include "global.h"
 #include "speed.h"
 
+void AxisControlClass::enableStepper() {
+    if (digitalRead(MOTOR_OFF) == HIGH) {
+        digitalWrite(MOTOR_OFF, LOW);
+    }
+}
+
+void AxisControlClass::disableStepper() {
+    if (digitalRead(MOTOR_OFF) == LOW) {
+        digitalWrite(MOTOR_OFF, HIGH);
+    }
+    coord->setX(-1);
+    coord->setY(-1);
+    coord->setZ(-1);
+    Timer::sleep_kangdroid(300000);
+}
+
 void AxisControlClass::moveTestX(int speed, int steps) {
     for (int step_x = 0; step_x < steps; step_x++) {
         digitalWrite(x_motor->retStep(), HIGH);
@@ -43,6 +59,19 @@ void AxisControlClass::calculateSpeed(int &speed_x, int &speed_y, const int &fr,
         spd_tmpx = (speed_x * spd_tmpx);
         speed_x = roundUP(spd_tmpx);
         speed_y = roundUP(spd_tmpx);
+    }
+}
+
+void AxisControlClass::calculateSpeed(int &speed_z, const int &fr, int &target_feedrate) {
+    float spd_tmpx;
+    if (target_feedrate > fr) {
+        spd_tmpx = ((float)target_feedrate / fr);
+        spd_tmpx = (speed_z / spd_tmpx);
+        speed_z = roundUP(spd_tmpx);
+    } else {
+        spd_tmpx = (fr / (float)target_feedrate);
+        spd_tmpx = (speed_z * spd_tmpx);
+        speed_z = roundUP(spd_tmpx);
     }
 }
 
@@ -132,7 +161,6 @@ void AxisControlClass::moveTest(float target_xcoord, float target_ycoord, int ta
     coord->setY(target_ycoord);
 
     // Initiate HW Clock and start thread.
-    Timer::TIMER_Init();
     unsigned int st_time = Timer::TIMER_GetSysTick();
     thread tx(moveTestX, spd_x, stp_x);
     thread ty(moveTestY, spd_y, stp_y);
@@ -156,13 +184,22 @@ void AxisControlClass::calculateMovements(float target_x, float target_y, int* s
     *stp_y = STEPS_PER_MM::Y * (dy - dx);
 }
 
-void AxisControlClass::moveZ(int length, int speed) {
-    int st_time, ed_time;
-    st_time = time(NULL);
-    z_motor->rotateMotor(length * STEPS_PER_MM::Z, SPEED_MOTOR::SPEED_LOW);
-    ed_time = time(NULL);
+void AxisControlClass::calculateMovementsZ(float target_z, int &stp_z) {
+    float dz = coord->retZ() - target_z;
+    stp_z = STEPS_PER_MM::Z * dz;
+}
+
+void AxisControlClass::moveZ(float target_z, int target_fr) {
+    int spd_z = DEFAULT_MOTOR_SPEED;
+    int stp_z;
+    calculateSpeed(spd_z, MOTOR_SPEED_BASERATE, target_fr);
+    calculateMovementsZ(target_z, stp_z);
+
+    digitalWrite(z_motor->retDir(), (stp_z >= 0) ? HIGH:LOW);
+    stp_z = (stp_z < 0) ? -stp_z : stp_z;
+    z_motor->rotateMotor(stp_z, spd_z);
     if (coord->retZ() != -1) {
-        coord->setZ(length);
+        coord->setZ(target_z);
     }
 }
 void AxisControlClass::moveE(int length, int speed) {

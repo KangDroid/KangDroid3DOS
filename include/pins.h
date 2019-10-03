@@ -9,7 +9,9 @@
 #define MOTOR_Y_STEP 22
 #define MOTOR_X_DIR 23
 #define MOTOR_X_STEP 21
-#define MOTOR_OFF 27
+#define MOTOR_Z_DIR 4
+#define MOTOR_Z_STEP 5
+#define MOTOR_OFF 6
 
 // Pin counter(For iteration)
 #define ES_PIN_COUNT 3

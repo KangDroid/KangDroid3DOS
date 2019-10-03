@@ -4,7 +4,7 @@
 // Initiate
 Coord *coord = new Coord();
 EndstopClass *es = new EndstopClass(ES_X, ES_Y, ES_Z, PUD_UP);
-MotorControlClass *z_motor = new MotorControlClass(-1, -1, MOTOR_OFF);
+MotorControlClass *z_motor = new MotorControlClass(MOTOR_Z_STEP, MOTOR_Z_DIR, MOTOR_OFF);
 MotorControlClass *x_motor = new MotorControlClass(MOTOR_X_STEP, MOTOR_X_DIR, MOTOR_OFF);
 MotorControlClass *y_motor = new MotorControlClass(MOTOR_Y_STEP, MOTOR_Y_DIR, MOTOR_OFF);
 MotorControlClass *e_motor = new MotorControlClass(-1, -1, MOTOR_OFF);

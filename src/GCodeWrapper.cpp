@@ -12,17 +12,19 @@ void GCodeWrapper::M119() {
 }
 
 void GCodeWrapper::M18() {
-    z_motor->disableStepper();
+    axis->disableStepper();
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }
 
 void GCodeWrapper::G1(float feedrate, float x, float y, float z) {
+    axis->enableStepper();
+    Timer::TIMER_Init();
     if (x || y) {
         AxisControlClass::moveTest(x, y, (int)feedrate);
     }
     
     if (z) {
-        axis->moveZ(z, feedrate);
+        AxisControlClass::moveZ(z, (int)feedrate);
     }
     //z_motor.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);

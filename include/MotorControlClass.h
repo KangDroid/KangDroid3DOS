@@ -5,8 +5,6 @@ class MotorControlClass : public PinClass {
         int enable;
     public:
         void invertDirection();
-        void enableStepper();
-        void disableStepper();
         void rotateMotor(int steps, int speed);
         void rotateMotorInfinite(int speed);
         int retStep();

@@ -11,6 +11,7 @@ void InnerFunction::autoHomeSimulation() {
     int start_time;
     int end_time;
     Timer::TIMER_Init();
+    axis->enableStepper();
 
     // Home X
     start_time = time(NULL);
@@ -52,18 +53,18 @@ void InnerFunction::autoHomeSimulation() {
     coord->setY(0);
 
     // Home Z
-    /*start_time = time(NULL);
-    while (!(digitalRead(pin_es_array[2]) == false)) {
+    digitalWrite(z_motor->retDir(), HIGH);
+    start_time = time(NULL);
+    while ((digitalRead(ES_Z) == false)) {
         end_time = time(NULL);
-        
-        if ((end_time - start_time) == 5) {
+        if ((end_time - start_time) == 20) {
             // Failed
+            sendSignal(INTERRUPT_CODE::AUTO_HOME_FAILED);
         } else {
-            clearScreen();
-            cout << "Moving Z..." << endl;
+            z_motor->rotateMotorInfinite(SPEED_MOTOR::SPEED_MID);
         }
     }
-    coord.setZ(0);; */
+    coord->setZ(0);
 }
 
 void InnerFunction::FileTest() {

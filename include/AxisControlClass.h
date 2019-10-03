@@ -6,10 +6,14 @@ class AxisControlClass {
         int corexy = 0;
     public:
         AxisControlClass(int isCore);
-        void moveZ(int length, int speed);
+        static void moveZ(float target_z, int target_fr);
         void moveE(int length, int speed);
         void moveAxisInf(int speed);
+        void enableStepper();
+        void disableStepper();
+        static void calculateMovementsZ(float target_z, int &stp_z);
         static void calculateSpeed(int &speed_x, int &speed_y, const int &fr, int &target_feedrate);
+        static void calculateSpeed(int &speed_z, const int &fr, int &target_feedrate);
         static int roundUP(float input);
         static void moveTest(float target_xcoord, float target_ycoord, int target_fr);
         static void calculateMovements(float target_x, float target_y, int* stp_x, int* stp_y);

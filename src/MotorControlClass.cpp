@@ -19,29 +19,13 @@ void MotorControlClass::invertDirection() {
     }
 }
 
-void MotorControlClass::enableStepper() {
-    if (digitalRead(this->enable) == LOW) {
-        digitalWrite(this->enable, HIGH);
-    }
-}
-
-void MotorControlClass::disableStepper() {
-    if (digitalRead(this->enable) == HIGH) {
-        digitalWrite(this->enable, LOW);
-    }
-    coord->setX(-1);
-    coord->setY(-1);
-    coord->setZ(-1);
-    Timer::sleep_kangdroid(500000);
-}
-
 void MotorControlClass::rotateMotor(int steps, int speed) {
     //enableStepper();
     for (int i = 0; i < steps; i++) {
         digitalWrite(this->step, HIGH);
-        Timer::sleep_kangdroid(20800/speed);
+        Timer::sleep_kangdroid(speed);
         digitalWrite(this->step, LOW);
-        Timer::sleep_kangdroid(20800/speed);
+        Timer::sleep_kangdroid(speed);
     }
 }
 
