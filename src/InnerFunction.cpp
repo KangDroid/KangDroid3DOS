@@ -10,10 +10,11 @@
 void InnerFunction::autoHomeSimulation() {
     int start_time;
     int end_time;
+    Timer::TIMER_Init();
 
     // Home X
     start_time = time(NULL);
-    x_motor->enableStepper();
+    //x_motor->enableStepper();
 
     /*X/Y Motor direction changes because it is corexy*/
     digitalWrite(y_motor->retDir(), LOW);
@@ -35,8 +36,8 @@ void InnerFunction::autoHomeSimulation() {
     start_time = time(NULL);
 
     /*X/Y Motor direction changes because it is corexy*/
-    digitalWrite(y_motor->retDir(), LOW);
-    digitalWrite(x_motor->retDir(), LOW);
+    digitalWrite(y_motor->retDir(), HIGH);
+    digitalWrite(x_motor->retDir(), HIGH);
     //TODO: Surround those digitalWrite with function or somehow implement it --> Beautify
 
     while (!(digitalRead(ES_Y) == false)) {
