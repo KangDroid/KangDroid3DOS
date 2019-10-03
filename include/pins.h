@@ -1,5 +1,5 @@
 // Endstop Pins
-#define ES_X 7
+#define ES_X 3
 #define ES_Y 0
 #define ES_Z 2
 
