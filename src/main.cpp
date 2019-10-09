@@ -69,6 +69,7 @@ int showMenu() {
     cout << "1. Test Endstop PIN" << endl;
     cout << "2. Auto Home Simulation" << endl;
     cout << "3. Custom GCode terminal" << endl;
+    cout << "4. Execute pre-defined test GCode file" << endl;
     cout << "0. Quit" << endl;
     cin >> ret_val;
 
