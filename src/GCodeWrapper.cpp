@@ -26,6 +26,7 @@ void GCodeWrapper::G1(float feedrate, float x, float y, float z) {
     if (z) {
         AxisControlClass::moveZ(z, (int)feedrate);
     }
+    Timer::TIMER_Del(); // Free those Timer;
     //z_motor.rotateMotor(STEPS_PER_MM::Z * z, feedrate);
     machine_working = sendSignal(INTERRUPT_CODE::SIG_OK);
 }

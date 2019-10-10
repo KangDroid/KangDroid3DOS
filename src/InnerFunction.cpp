@@ -65,6 +65,7 @@ void InnerFunction::autoHomeSimulation() {
         }
     }
     coord->setZ(0);
+    Timer::TIMER_Del();
 }
 
 void InnerFunction::FileTest() {
