@@ -4,6 +4,8 @@
 
 static volatile unsigned *TIMER_registers;
 
+static void *TIMER_map;
+
 void Timer::sleep_kangdroid(unsigned int usleep) {
     unsigned int st_time, ed_time;
     st_time = TIMER_GetSysTick();
@@ -19,6 +21,12 @@ unsigned int Timer::TIMER_GetSysTick() {
     return TIMER_registers[1];
 }
 
+void Timer::TIMER_Del() {
+    if (TIMER_map != nullptr) {
+        munmap(TIMER_map, 4096);
+    }
+}
+
 void Timer::TIMER_Init() {
     /* open /dev/mem */
     int TIMER_memFd;
@@ -29,7 +37,7 @@ void Timer::TIMER_Init() {
     }
 
     /* mmap BCM System Timer */
-    void *TIMER_map = mmap(
+    TIMER_map = mmap(
         NULL,
         4096, /* BLOCK_SIZE */
         PROT_READ /*|PROT_WRITE*/,
